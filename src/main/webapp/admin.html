@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin List</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<h1>Admin List</h1>
+<form id="searchForm">
+    <input type="text" id="checktext" placeholder="Search by name or other criteria" />
+    <button type="button" onclick="fetchAdminList()">Search</button>
+</form>
+<div id="adminList"></div>
+
+<script>
+    function fetchAdminList() {
+        var checktext = $('#checktext').val();
+        var page = {
+            currentPage: 1, // You might want to add logic to handle page numbers
+            pageSize: 10    // You might want to add logic to handle page size
+        };
+
+        $.ajax({
+            url: '/admin/list',
+            type: 'GET',
+            contentType: 'application/json',
+            data: {
+                page: JSON.stringify(page),
+                checktext: checktext
+            },
+            dataType: 'json',
+            success: function(response) {
+                // Assuming RestResult is a JSON object with 'count' and 'list' properties
+                var adminListDiv = $('#adminList');
+                adminListDiv.empty(); // Clear previous list
+
+                if (response.list && response.list.length > 0) {
+                    response.list.forEach(function(admin) {
+                        // Create and append list items based on the admin object properties
+                        var listItem = $('<li></li>').text(admin.name + ' - ' + admin.otherProperty); // Replace with actual properties
+                        adminListDiv.append(listItem);
+                    });
+                } else {
+                    adminListDiv.append($('<li>No admins found</li>'));
+                }
+
+                // Optionally, display the total count somewhere on the page
+                console.log('Total admins:', response.count);
+            },
+            error: function(xhr, status, error) {
+                alert('An error occurred: ' + error);
+            }
+        });
+    }
+</script>
+</body>
+</html>
