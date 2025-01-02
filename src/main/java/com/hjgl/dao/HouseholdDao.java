@@ -95,12 +95,11 @@ public class HouseholdDao {
     //增加
     public int add(Household hou) {
         System.out.println("check:");
-        String sql = "INSERT INTO Household (HouseholdAddress, HouseholderName, HouseholdPopulation, HouseholdPersonID) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Household (HouseholdAddress, HouseholderName, HouseholdPopulation) VALUES (?, ?, ?)";
         int res = JdbcUtil.update(sql,
                 hou.getHouseholdaddress(),
                 hou.getHouseholdername(),
-                hou.getHouseholdpopulation(),
-                hou.getHouseholdpersonid()
+                hou.getHouseholdpopulation()
         );
         return res;
     }
@@ -122,8 +121,10 @@ public class HouseholdDao {
     //修改
 
     public int edit(Household hou) {
-        String sql = "update household set HouseholdAddress =? HouseholderName =? HouseholdPopulation =?  HouseholdPersonID =? ";
-        int res = JdbcUtil.update(sql,hou.getHouseholdaddress(),hou.getHouseholdername(),hou.getHouseholdpopulation(),hou.getHouseholdpersonid() );
+        System.out.println("edit:"+hou.getHouseholdaddress());
+        System.out.println("edit:"+hou.getHouseholdid());
+        String sql = "update household set HouseholdAddress =?, HouseholderName =?, HouseholdPopulation =? WHERE HouseholdID = ?";
+        int res = JdbcUtil.update(sql,hou.getHouseholdaddress(),hou.getHouseholdername(),hou.getHouseholdpopulation(),hou.getHouseholdid() );
         return res;
     }
 }

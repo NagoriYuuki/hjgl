@@ -1,7 +1,5 @@
 package com.hjgl.bean;
 
-import com.hjgl.util.Page;
-
 import java.util.Date;
 
 public class HouseholdCorrection
@@ -13,11 +11,11 @@ public class HouseholdCorrection
      * - HouseholdCorrectionAdminID: 外键，关联到管理员表 (INT)
      * - HouseholdCorrectionPersonID: 外键，关联到人口表 (INT)
      */
-    private int HouseholdCorrectionID;
-    private Date HouseholdCorrectionTime;
-    private String HouseholdCorrectionStatus;
-    private int HouseholdCorrectionAdminID;
-    private int HouseholdCorrectionPersonID;
+    private int householdcorrectionid;
+    private Date householdcorrectiontime;
+    private String householdcorrectionstatus;
+    private int householdcorrectionadminid;
+    private int householdcorrectionpersonid;
 
     private Person person;
     private User user;
@@ -47,44 +45,44 @@ public class HouseholdCorrection
         this.admin = admin;
     }
 
-    public int getHouseholdCorrectionID() {
-        return HouseholdCorrectionID;
+    public int getHouseholdcorrectionid() {
+        return householdcorrectionid;
     }
 
-    public void setHouseholdCorrectionID(int householdCorrectionID) {
-        HouseholdCorrectionID = householdCorrectionID;
+    public void setHouseholdcorrectionid(int householdcorrectionid) {
+        this.householdcorrectionid = householdcorrectionid;
     }
 
-    public Date getHouseholdCorrectionTime() {
-        return HouseholdCorrectionTime;
+    public Date getHouseholdcorrectiontime() {
+        return householdcorrectiontime;
     }
 
-    public void setHouseholdCorrectionTime(Date householdCorrectionTime) {
-        HouseholdCorrectionTime = householdCorrectionTime;
+    public void setHouseholdcorrectiontime(Date householdcorrectiontime) {
+        this.householdcorrectiontime = householdcorrectiontime;
     }
 
-    public String getHouseholdCorrectionStatus() {
-        return HouseholdCorrectionStatus;
+    public String getHouseholdcorrectionstatus() {
+        return householdcorrectionstatus;
     }
 
-    public void setHouseholdCorrectionStatus(String householdCorrectionStatus) {
-        HouseholdCorrectionStatus = householdCorrectionStatus;
+    public void setHouseholdcorrectionstatus(String householdcorrectionstatus) {
+        this.householdcorrectionstatus = householdcorrectionstatus;
     }
 
-    public int getHouseholdCorrectionAdminID() {
-        return HouseholdCorrectionAdminID;
+    public int getHouseholdcorrectionadminid() {
+        return householdcorrectionadminid;
     }
 
-    public void setHouseholdCorrectionAdminID(int householdCorrectionAdminID) {
-        HouseholdCorrectionAdminID = householdCorrectionAdminID;
+    public void setHouseholdcorrectionadminid(int householdcorrectionadminid) {
+        this.householdcorrectionadminid = householdcorrectionadminid;
     }
 
-    public int getHouseholdCorrectionPersonID() {
-        return HouseholdCorrectionPersonID;
+    public int getHouseholdcorrectionpersonid() {
+        return householdcorrectionpersonid;
     }
 
-    public void setHouseholdCorrectionPersonID(int householdCorrectionPersonID) {
-        HouseholdCorrectionPersonID = householdCorrectionPersonID;
+    public void setHouseholdcorrectionpersonid(int householdcorrectionpersonid) {
+        this.householdcorrectionpersonid = householdcorrectionpersonid;
     }
 
 }

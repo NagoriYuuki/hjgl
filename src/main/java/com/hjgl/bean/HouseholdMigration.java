@@ -1,5 +1,7 @@
 package com.hjgl.bean;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Date;
 
 public class HouseholdMigration
@@ -15,26 +17,29 @@ public class HouseholdMigration
      * - HouseholdMigrationNewHouseholdID: 新户籍 外键，关联到户籍表 (INT)
      */
 
-    private int HouseholdMigrationID;
-    private Date HouseholdMigrationTime;
-    private Date HouseholdMigrationRteturnTime;
-    private String HouseholdMigrationStatus;
-    private int HouseholdMigrationOriginalHouseholdID;
-    private int HouseholdMigrationUserID;
-    private int HouseholdMigrationAdminID;
-    private int HouseholdMigrationNewHouseholdID;
+    @JsonProperty("householdmigrationid")
+    private int householdmigrationid;
 
+    @JsonProperty("householdmigrationtime")
+    private Date householdmigrationtime;
+
+    @JsonProperty("householdmigrationstatus")
+    private String householdmigrationstatus;
+
+    @JsonProperty("householdmigrationoriginalhouseholdid")
+    private int householdmigrationoriginalhouseholdid;
+
+    @JsonProperty("householdmigrationuserid")
+    private int householdmigrationuserid;
+
+    @JsonProperty("householdmigrationadminid")
+    private int householdmigrationadminid;
+
+    @JsonProperty("householdmigrationnewhouseholdid")
+    private int householdmigrationnewhouseholdid;
     private Person person;
     private User user;
     private Admin admin;
-
-    public Date getHouseholdMigrationRteturnTime() {
-        return HouseholdMigrationRteturnTime;
-    }
-
-    public void setHouseholdMigrationRteturnTime(Date householdMigrationRteturnTime) {
-        HouseholdMigrationRteturnTime = householdMigrationRteturnTime;
-    }
 
     public Person getPerson() {
         return person;
@@ -62,61 +67,75 @@ public class HouseholdMigration
 
 
 
-    public int getHouseholdMigrationID() {
-        return HouseholdMigrationID;
+    public int getHouseholdmigrationid() {
+        return householdmigrationid;
     }
 
-    public void setHouseholdMigrationID(int householdMigrationID) {
-        HouseholdMigrationID = householdMigrationID;
+    public void setHouseholdmigrationid(int householdmigrationid) {
+        this.householdmigrationid = householdmigrationid;
     }
 
-    public Date getHouseholdMigrationTime() {
-        return HouseholdMigrationTime;
+    public Date getHouseholdmigrationtime() {
+        return householdmigrationtime;
     }
 
-    public void setHouseholdMigrationTime(Date householdMigrationTime) {
-        HouseholdMigrationTime = householdMigrationTime;
+    public void setHouseholdmigrationtime(Date householdmigrationtime) {
+        this.householdmigrationtime = householdmigrationtime;
     }
 
-    public String getHouseholdMigrationStatus() {
-        return HouseholdMigrationStatus;
+    public String getHouseholdmigrationstatus() {
+        return householdmigrationstatus;
     }
 
-    public void setHouseholdMigrationStatus(String householdMigrationStatus) {
-        HouseholdMigrationStatus = householdMigrationStatus;
+    public void setHouseholdmigrationstatus(String householdmigrationstatus) {
+        this.householdmigrationstatus = householdmigrationstatus;
     }
 
-    public int getHouseholdMigrationOriginalHouseholdID() {
-        return HouseholdMigrationOriginalHouseholdID;
+    public int getHouseholdmigrationoriginalhouseholdid() {
+        return householdmigrationoriginalhouseholdid;
     }
 
-    public void setHouseholdMigrationOriginalHouseholdID(int householdMigrationOriginalHouseholdID) {
-        HouseholdMigrationOriginalHouseholdID = householdMigrationOriginalHouseholdID;
+    public void setHouseholdmigrationoriginalhouseholdid(int householdmigrationoriginalhouseholdid) {
+        this.householdmigrationoriginalhouseholdid = householdmigrationoriginalhouseholdid;
     }
 
-    public int getHouseholdMigrationUserID() {
-        return HouseholdMigrationUserID;
+    public int getHouseholdmigrationuserid() {
+        return householdmigrationuserid;
     }
 
-    public void setHouseholdMigrationUserID(int householdMigrationUserID) {
-        HouseholdMigrationUserID = householdMigrationUserID;
+    public void setHouseholdmigrationuserid(int householdmigrationuserid) {
+        this.householdmigrationuserid = householdmigrationuserid;
     }
 
-    public int getHouseholdMigrationAdminID() {
-        return HouseholdMigrationAdminID;
+    public int getHouseholdmigrationadminid() {
+        return householdmigrationadminid;
     }
 
-    public void setHouseholdMigrationAdminID(int householdMigrationAdminID) {
-        HouseholdMigrationAdminID = householdMigrationAdminID;
+    public void setHouseholdmigrationadminid(int householdmigrationadminid) {
+        this.householdmigrationadminid = householdmigrationadminid;
     }
 
-    public int getHouseholdMigrationNewHouseholdID() {
-        return HouseholdMigrationNewHouseholdID;
+    public int getHouseholdmigrationnewhouseholdid() {
+        return householdmigrationnewhouseholdid;
     }
 
-    public void setHouseholdMigrationNewHouseholdID(int householdMigrationNewHouseholdID) {
-        HouseholdMigrationNewHouseholdID = householdMigrationNewHouseholdID;
+    public void setHouseholdmigrationnewhouseholdid(int householdmigrationnewhouseholdid) {
+        this.householdmigrationnewhouseholdid = householdmigrationnewhouseholdid;
     }
 
-
+    @Override
+    public String toString() {
+        return "HouseholdMigration{" +
+                "householdmigrationid=" + householdmigrationid +
+                ", householdmigrationtime=" + householdmigrationtime +
+                ", householdmigrationstatus='" + householdmigrationstatus + '\'' +
+                ", householdmigrationoriginalhouseholdid=" + householdmigrationoriginalhouseholdid +
+                ", householdmigrationuserid=" + householdmigrationuserid +
+                ", householdmigrationadminid=" + householdmigrationadminid +
+                ", householdmigrationnewhouseholdid=" + householdmigrationnewhouseholdid +
+                ", person=" + person +
+                ", user=" + user +
+                ", admin=" + admin +
+                '}';
+    }
 }

@@ -22,68 +22,50 @@ import java.util.List;
 @Repository
 public class HouseholdCorrectionDao {
     @OperationLog(description = "同意")
-    public int agree(HouseholdCorrection householdCorrection,PersonDao personDao) throws SQLException, IllegalAccessException, InstantiationException {
-        String sql="update HouseholdCorrection set HouseholdCorrectionRteturnTime = now() and HouseholdCorrectionStatus = ? where HouseholdCorrectionID = ? ";
-        int res = JdbcUtil.update(sql,"agree",householdCorrection.getHouseholdCorrectionID());
-        String sql1= "select * from person where personid = ?";
-        ResultSet rs=JdbcUtil.query(sql1,householdCorrection.getHouseholdCorrectionPersonID());
-        List<Person> list=JdbcUtil.convertResultSetToList(rs,Person.class);
-        Person person =list.get(0);
-        personDao.edit(person);
+    public int agree(HouseholdCorrection householdCorrection) throws SQLException, IllegalAccessException, InstantiationException {
+        String sql="update HouseholdCorrection set HouseholdCorrectionStatus = ? where HouseholdCorrectionID = ? ";
+        int res = JdbcUtil.update(sql,"已同意",householdCorrection.getHouseholdcorrectionid());
         return res;
     }
 
     @OperationLog(description = "拒绝")
     public int refuse(HouseholdCorrection householdCorrection) {
-        String sql = "update HouseholdCorrection set HouseholdCorrectionStatus = ? and HouseholdCorrectionRteturnTime = now() where HouseholdCorrectionID = ? ";
-        int res = JdbcUtil.update(sql,"refuse", householdCorrection.getHouseholdCorrectionID());
+        String sql = "update HouseholdCorrection set HouseholdCorrectionStatus = ? where HouseholdCorrectionID = ? ";
+        int res = JdbcUtil.update(sql,"refuse", householdCorrection.getHouseholdcorrectionid());
         return res;
     }
 
 
     public List getRecord(User user, Admin admin, Page page) throws SQLException, IllegalAccessException, InstantiationException {
-        String sql="select a.* from HouseholdCorrection a left join user b on a.HouseholdCorrectionUserID = b.userid left join a.HouseholdCorrectionAdminID = c.adminid";
+        String sql="select * from HouseholdCorrection ";
+        System.out.println(user);
         List params=new ArrayList();
-        if(user!=null&&user.getUserName()!=null){
-            sql=sql+" where b.name like ? ";
-            params.add("%"+user.getUserName()+"%");
-        }
-        if(admin!=null&&admin.getAdminname()!=null){
-            if(!sql.contains("where")) sql=sql+" where ";
-            sql=sql+" and c.adminname like ? ";
-            params.add("%"+admin.getAdminname()+"%");
-        }
-        sql=sql+" order by status asc ";//鎺掑簭
-        if(page!=null&&page.getPage()>0){
-            sql=sql+" limit ?,? ";
-            params.add(page.getStart());
-            params.add(page.getLimit());
-
-        }
+        System.out.println(sql);
         ResultSet rs = JdbcUtil.query(sql, params.toArray());
+
         List<HouseholdCorrection> list = JdbcUtil.convertResultSetToList(rs, HouseholdCorrection.class);
+
         JdbcUtil.close(rs);
+//        System.out.println(list.size());
         return list;
     }
 
     public int getCount(User user, Admin admin) throws SQLException, IllegalAccessException, InstantiationException {
-        String sql = "select count(*) from HouseholdCorrection a left join user b on a.HouseholdCorrectionPersonID = b.userid left join book c on a.HouseholdCorrectionPersonID = c.PersonID ";
+        String sql="select * from HouseholdCorrection ";
         List params = new ArrayList();
-        if (user != null && user.getUserName() != null) {
-            sql = sql + " where b.UserName like ? ";
-            params.add("%" + user.getUserName() + "%");
-        }
-        if (admin != null &&admin.getAdminname() != null) {
-            if (!sql.contains("where")) {
-                sql = sql + " where ";
-            }
-            sql = sql + " and c.adminname like ?";
-            params.add("%" + admin.getAdminname() + "%");
-        }
         ResultSet rs = JdbcUtil.query(sql, params.toArray());
-        rs.next();
-        int count = rs.getInt(1);
+        int count=0;
+        while (rs.next()){
+            count++;
+        }
         JdbcUtil.close(rs);
         return count;
     }
+
+    public int delete(HouseholdCorrection householdCorrection){
+        String sql="delete from householdCorrection where householdCorrectionID=?";
+        int res=JdbcUtil.update(sql,householdCorrection.getHouseholdcorrectionid());
+        return res;
+    }
+
 }

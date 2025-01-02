@@ -8,19 +8,25 @@
 </head>
 <body>
 <table class="layui-table" lay-data="{toolbar:'#toptools', url:'/household/list', page:true, id:'datalist'}" lay-filter="datalist">
+    <!--                                                        LayUI    Ajax请求-->
     <thead>
     <tr>
         <th lay-data="{field:'householdid', sort: true}">户籍编号</th>
         <th lay-data="{field:'householdername', sort: true}">户主姓名</th>
         <th lay-data="{field:'householdaddress', sort: true}">户籍地址</th>
-        <th lay-data="{field:'householdpopulation', sort: true}">户籍人数</th>
         <th lay-data="{toolbar:'#linetools'}">操作</th>
     </tr>
     </thead>
 </table>
-
 <!--新增窗口组件-->
 <div id="addWin" lay-filter="addWin" class="layui-form" style="display: none">
+
+<!--    <div class="layui-form-item">-->
+<!--        <label class="layui-form-label">户籍编号</label>-->
+<!--        <div class="layui-input-block">-->
+<!--            <input type="text" name="householdid"  placeholder="请输入户籍编号" autocomplete="off" class="layui-input">-->
+<!--        </div>-->
+<!--    </div>-->
     <div class="layui-form-item">
         <label class="layui-form-label">户主姓名</label>
         <div class="layui-input-block">
@@ -29,21 +35,29 @@
             </select>
         </div>
     </div>
+
     <div class="layui-form-item">
         <label class="layui-form-label">户籍地址</label>
         <div class="layui-input-block">
-            <input type="text" name="householdaddress" placeholder="请输入户籍地址" autocomplete="off" class="layui-input">
+            <input type="text" name="householdaddress"  placeholder="请输入户籍地址" autocomplete="off" class="layui-input">
         </div>
     </div>
 </div>
-
 <!--编辑窗口组件-->
 <div id="editWin" lay-filter="editWin" class="layui-form" style="display: none">
-    <input type="hidden" name="categoryid">
     <div class="layui-form-item">
-        <label class="layui-form-label">分类名称</label>
+        <label class="layui-form-label">户主姓名</label>
         <div class="layui-input-block">
-            <input type="text" name="categoryname" placeholder="请输入分类名称" autocomplete="off" class="layui-input">
+            <select id="edithouseholdername" name="householdername" lay-filter="householdername" class="layui-input">
+                <!-- 动态加载选项 -->
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">户籍地址</label>
+        <div class="layui-input-block">
+            <input type="text" name="householdaddress"  placeholder="请输入户籍地址" autocomplete="off" class="layui-input">
         </div>
     </div>
 </div>
@@ -67,39 +81,75 @@
 
 <!--表格头部工具栏-->
 <script type="text/html" id="toptools">
-    <button type="button" class="layui-btn layui-btn-sm" lay-event="add">新增</button>
+    <button type="button" class="layui-btn layui-btn-sm"
+            lay-event="add">新增</button>
 </script>
-
 <!--表格行内工具栏-->
 <script type="text/html" id="linetools">
-    <button type="button" class="layui-btn layui-btn-xs layui-bg-orange" lay-event="edit">编辑</button>
-    <button type="button" class="layui-btn layui-btn-xs layui-bg-red" lay-event="delete">删除</button>
-    <button type="button" class="layui-btn layui-btn-xs" lay-event="detail">详情</button>
+    <button type="button" class="layui-btn layui-btn-xs layui-bg-orange"
+            lay-event="edit">编辑</button>
+    <button type="button" class="layui-btn layui-btn-xs layui-bg-red"
+            lay-event="delete">删除</button>
 </script>
 
 <script src="static/layui/layui.all.js"></script>
 <script>
-    const $ = layui.$;
-    const table = layui.table;
-    const layer = layui.layer;
-    const form = layui.form;
+    /*声明layui内部对象*/
+    const $=layui.$;
+    const table=layui.table;
+    const layer=layui.layer;
+    const form=layui.form;
+    $.ajax({
+        url:"login/islogin",
+        async:false,
+        success:function(result){
+            if(result==''){
+                top.location.href="login.html"
+            }
+        }
+    });
+    /*声明表格头部工具栏时间*/
 
-    // 动态加载户主姓名
+    // 在页面加载时动态获取户主姓名
     $(document).ready(function() {
         $.ajax({
-            url: "person/list", // 后端接口，获取户主姓名列表
+            url: "person/list", // 替换为后端返回户主列表的接口
             method: "GET",
             success: function(response) {
+                console.log("返回的数据：", response);  // 调试输出返回数据
                 if (response.data && response.data.length > 0) {
                     const dropdown = $('#householdername');
                     dropdown.empty(); // 清空现有选项
                     response.data.forEach(function(person) {
-                        dropdown.append(new Option(person.personname, person.personid));
+                        dropdown.append(new Option(person.personname, person.personname));
                     });
-                    // 重新渲染下拉框
+                    // 如果使用 LayUI，需要重新渲染下拉框
                     layui.form.render('select');
                 } else {
-                    layer.msg("无可用的户主信息", {icon: 0, time: 2000});
+                    layer.msg("没有可用的户主信息", {icon: 0, time: 2000});
+                }
+            },
+            error: function() {
+                layer.msg("加载户主姓名失败", {icon: 2, time: 2000});
+            }
+        });
+    });
+    $(document).ready(function() {
+        $.ajax({
+            url: "person/list", // 替换为后端返回户主列表的接口
+            method: "GET",
+            success: function(response) {
+                console.log("返回的数据：", response);  // 调试输出返回数据
+                if (response.data && response.data.length > 0) {
+                    const dropdown = $('#edithouseholdername');
+                    dropdown.empty(); // 清空现有选项
+                    response.data.forEach(function(person) {
+                        dropdown.append(new Option(person.personname, person.personname));
+                    });
+                    // 如果使用 LayUI，需要重新渲染下拉框
+                    layui.form.render('select');
+                } else {
+                    layer.msg("没有可用的户主信息", {icon: 0, time: 2000});
                 }
             },
             error: function() {
@@ -108,78 +158,108 @@
         });
     });
 
-    // 表格头部工具栏事件
-    table.on("toolbar(datalist)", function (obj) {
-        if (obj.event === 'add') {
-            form.val("addWin", { householdid: "", householdername: "", householdaddress: "" });
+
+
+    table.on("toolbar(datalist)",function(obj){
+        var event=obj.event;
+        if(event=='add'){
+            //点击新增按钮执行的方法
+            <!--            重置表单内容-->
+            form.val("addWin",{householdid:"",householdername:"",householdaddress:""});
+            //打开一个对话框(输入内容)
             layer.open({
-                type: 1,
-                title: "新增户籍",
-                area: ['400px', '560px'],
-                content: $("#addWin"),
-                btn: ["保存"],
-                btn1: function () {
-                    const formdata = form.val("addWin");
+                <!--            具有遮罩层样式的窗口-->
+                type:1,
+                title:"新增户籍",
+                area:['400px','560px'],
+                content:$("#addWin"),
+                btn:["保存"],
+                btn1:function(){
+                    //点击保存按钮  保存数据
+                    //表单中的数据
+                    var formdata=form.val("addWin");
                     $.ajax({
-                        method: 'post',
-                        url: 'category/add',
-                        data: formdata,
-                        success: function () {
+                        method:'post',
+                        url:'household/add',
+                        data:formdata,
+                        success:function(result){
+                            //关闭对话框
                             layer.closeAll();
+                            //刷新数据
                             table.reload("datalist");
-                            layer.msg("添加成功", { icon: 1, time: 1800 });
+                            //提示用户
+                            layer.msg("添加成功",{icon:1,time:1800});
                         }
                     });
+
                 }
             });
+
         }
     });
 
-    // 行内工具栏事件
-    table.on("tool(datalist)", function (obj) {
-        const event = obj.event;
-        const data = obj.data;
-
-        if (event === 'edit') {
-            form.val("editWin", data);
+    /*行内工具栏的监听事件*/
+    table.on("tool(datalist)",function(obj){
+        var event=obj.event;
+        var data=obj.data;//点击按钮所在行的数据
+        if(event=='edit'){
+            //点击编辑按钮执行的方法
+            form.val("editWin",data);//显示原始数据
+            //打开对话框
             layer.open({
-                type: 1,
-                title: '编辑分类',
-                area: ['300px', '260px'],
-                content: $("#editWin"),
-                btn: ["保存"],
-                btn1: function () {
-                    const formdata = form.val("editWin");
+                type:1,
+                title:'编辑户籍',
+                area:['400px','560px'],
+                content:$("#editWin"),
+                btn:["保存"],
+                btn1:function(){
+                    //获取表单数据
+                    var formdata=form.val("editWin");
+                    //提交数据
                     $.ajax({
-                        method: "post",
-                        url: "category/edit",
-                        data: formdata,
-                        success: function () {
+                        method:"post",
+                        url:"household/edit",
+                        data:{
+                            householdid:data.householdid,
+                            householdername:formdata.householdername,
+                            householdaddress:formdata.householdaddress
+
+                        },
+                        success:function(result){
+                            //刷新表格
                             table.reload("datalist");
+                            //关闭窗口
                             layer.closeAll();
-                            layer.msg("保存成功", { icon: 1, time: 1800 });
+                            //提示用户
+                            layer.msg("保存成功",{icon:1,time:1800});
                         }
                     });
+
                 }
             });
-        } else if (event === 'delete') {
-            layer.confirm("确认要删除该行数据吗?", function () {
+        }else if(event=='delete'){
+            //点击删除按钮执行的方法
+            //确认是否删除数据
+            layer.confirm("确认要删除该行数据吗?",function(){
+                //点击确认后执行的代码
                 $.ajax({
-                    url: "category/delete",
-                    data: data,
-                    success: function () {
+                    url:"household/delete",
+                    data:data,
+                    success:function (){
                         layer.closeAll();
                         table.reload("datalist");
-                        layer.msg("删除成功", { icon: 1, time: 1800 });
+                        layer.msg("删除成功",{icon:1,time:1800});
                     }
                 });
             });
-        } else if (event === 'detail') {
+        }else if(event=='detail'){
+            // 点击详情按钮
             $.ajax({
-                url: `/household/details?householdid=${data.householdid}`,
+                url: `/household/details?householdid=${data.householdid}`, // 后端接口
+                method: "GET",
                 success: function (result) {
                     const tbody = $("#detailTable tbody");
-                    tbody.empty();
+                    tbody.empty(); // 清空之前的数据
                     result.forEach(person => {
                         tbody.append(`<tr>
                             <td>${person.id}</td>
@@ -194,6 +274,9 @@
                         area: ['600px', '400px'],
                         content: $("#detailWin")
                     });
+                },
+                error: function () {
+                    layer.msg("获取详情失败", {icon: 2, time: 1500});
                 }
             });
         }

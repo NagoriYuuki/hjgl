@@ -4,6 +4,7 @@ import com.hjgl.bean.*;
 import com.hjgl.util.JdbcUtil;
 import com.hjgl.util.OperationLog;
 import com.hjgl.util.Page;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
@@ -23,17 +24,28 @@ import java.util.List;
 @Repository
 
 public class HouseholdCancellationDao {
+    @Autowired
+    HouseholdDao householdDao;
     @OperationLog(description = "同意")
-    public int agree(HouseholdCancellation householdCancellation ,HouseholdDao householdDao) throws SQLException, IllegalAccessException, InstantiationException {
-        String sql="update HouseholdCancellation set HouseholdCancellationRteturnTime = now() and HouseholdCancellationStatus = ? where HouseholdCancellationID = ? ";
-        int res = JdbcUtil.update(sql,"agree",householdCancellation.getHouseholdcancellationid());
-        String sql1= "select * from Household where Householdid = ?";
-        ResultSet rs = JdbcUtil.query(sql1,householdCancellation.getHouseholdcancellationhouseholdid());
-        System.out.println(householdCancellation.getHouseholdcancellationhouseholdid());
-        List<Household> list=JdbcUtil.convertResultSetToList(rs, Household.class);
-        System.out.println(list.size());
-        Household household=list.get(0);
-        householdDao.delete(household);
+    public int agree(HouseholdCancellation householdCancellation) throws SQLException, IllegalAccessException, InstantiationException {
+        System.out.println("houseid:-----> "+ householdCancellation.getHouseholdcancellationhouseholdid());
+        System.out.println("adminid:-----> "+ householdCancellation.getHouseholdcancellationadminid());
+        // 修正 SQL 语法，使用逗号分隔 SET 子句
+        String sql = "UPDATE HouseholdCancellation SET HouseholdCancellationRteturnTime = NOW(), HouseholdCancellationStatus = ? WHERE HouseholdCancellationID = ?";
+        int res = JdbcUtil.update(sql, "已同意", householdCancellation.getHouseholdcancellationid());
+
+        // 获取关联的 Household 记录
+        String sql1 = "SELECT * FROM Household WHERE Householdid = ?";
+        ResultSet rs = JdbcUtil.query(sql1, householdCancellation.getHouseholdcancellationhouseholdid());
+        List<Household> list = JdbcUtil.convertResultSetToList(rs, Household.class);
+        JdbcUtil.close(rs);
+
+        if (list.size() != 0) {
+            Household household = list.get(0);
+            household.setIsdelete(1); // 设置 isdelete 为 1
+            householdDao.delete(household); // 假设有一个更新 Household 的方法
+        }
+
         return res;
     }
 
@@ -53,9 +65,9 @@ public class HouseholdCancellationDao {
         ResultSet rs = JdbcUtil.query(sql, params.toArray());
 
         List<HouseholdCancellation> list = JdbcUtil.convertResultSetToList(rs, HouseholdCancellation.class);
-        System.out.println(1111111);
+
         JdbcUtil.close(rs);
-        System.out.println(list.size());
+//        System.out.println(list.size());
         return list;
     }
 
@@ -70,4 +82,18 @@ public class HouseholdCancellationDao {
         JdbcUtil.close(rs);
         return count;
     }
+
+
+    //删除
+
+    public int delete(HouseholdCancellation householdCancellation){
+        String sql="delete from householdcancellation where HouseholdCancellationID=?";
+
+        int res=JdbcUtil.update(sql,householdCancellation.getHouseholdcancellationid());
+
+        return res;
+    }
+
+
+
 }
