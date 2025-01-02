@@ -8,50 +8,59 @@ public class Household {
      * - HouseholdPopulation: 户籍人口数  (INT)
      * - HouseholdPersonID: 外键，关联到人口表 (INT)
      */
-    private int HouseholdID;
-    private String HouseholdAddress;
-    private String HouserholderName;
-    private int HouseholdPopulation;
-    private int HouseholdPersonID;
+    private int householdid;
+    private String householdaddress;
+    private String householdername;
+    private int householdpopulation;
+    private int householdpersonid;
+    private int isdelete;
 
-    public int getHouseholdID() {
-        return HouseholdID;
+    public int getIsdelete() {
+        return isdelete;
     }
 
-    public void setHouseholdID(int householdID) {
-        HouseholdID = householdID;
+    public void setIsdelete(int isdelete) {
+        this.isdelete = isdelete;
     }
 
-    public String getHouseholdAddress() {
-        return HouseholdAddress;
+    public int getHouseholdid() {
+        return householdid;
     }
 
-    public void setHouseholdAddress(String householdAddress) {
-        HouseholdAddress = householdAddress;
+    public void setHouseholdid(int householdid) {
+        this.householdid = householdid;
     }
 
-    public String getHouserholderName() {
-        return HouserholderName;
+    public String getHouseholdaddress() {
+        return householdaddress;
     }
 
-    public void setHouserholderName(String houserholderName) {
-        HouserholderName = houserholderName;
+    public void setHouseholdaddress(String householdaddress) {
+        this.householdaddress = householdaddress;
     }
 
-    public int getHouseholdPopulation() {
-        return HouseholdPopulation;
+    public String getHouseholdername() {
+        return householdername;
     }
 
-    public void setHouseholdPopulation(int householdPopulation) {
-        HouseholdPopulation = householdPopulation;
+    public void setHouseholdername(String householdername) {
+        this.householdername = householdername;
     }
 
-    public int getHouseholdPersonID() {
-        return HouseholdPersonID;
+    public int getHouseholdpopulation() {
+        return householdpopulation;
     }
 
-    public void setHouseholdPersonID(int householdPersonID) {
-        HouseholdPersonID = householdPersonID;
+    public void setHouseholdpopulation(int householdpopulation) {
+        this.householdpopulation = householdpopulation;
+    }
+
+    public int getHouseholdpersonid() {
+        return householdpersonid;
+    }
+
+    public void setHouseholdpersonid(int householdpersonid) {
+        this.householdpersonid = householdpersonid;
     }
 
 }

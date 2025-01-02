@@ -28,7 +28,7 @@ public class PersonDao {
         List parms=new ArrayList();
         if(h!=null){
             sql=sql+" and PersonHouseholdID = ? ";
-            parms.add(h.getHouseholdID());
+            parms.add(h.getHouseholdid());
         }
         if(page!=null){
             sql=sql+" limit ?,? ";
@@ -46,7 +46,7 @@ public class PersonDao {
         List parms=new ArrayList();
         if(h!=null){
             sql=sql+" and PersonHouseholdID = ? ";
-            parms.add(h.getHouseholdID());
+            parms.add(h.getHouseholdid());
         }
         if(page!=null){
             sql=sql+" limit ?,? ";
@@ -83,12 +83,7 @@ public class PersonDao {
         }
         System.out.println(sql);
         ResultSet rs=JdbcUtil.query(sql,list.toArray());
-
         List<Person> per= JdbcUtil.convertResultSetToList(rs,Person.class);
-//        Person  p= per.get(0);
-
-//        System.out.println(p.getPersonname()+"-----");
-
         JdbcUtil.close(rs);
         return per;
     }

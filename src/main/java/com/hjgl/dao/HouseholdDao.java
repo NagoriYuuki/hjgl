@@ -47,7 +47,7 @@ public class HouseholdDao {
         String sql = "select * from Household ";
         List list = new ArrayList();
         if (checktext != null) {
-            sql = sql + " where HouserholderName like ?";
+            sql = sql + " where HouseholderName like ?";
             list.add("%" + checktext + "%");
         }
         if (sql.contains("where")) {
@@ -57,7 +57,7 @@ public class HouseholdDao {
         }
         if (page != null) {
             sql = sql + " limit ?,? ";
-            list.add(page.getPage());
+            list.add(page.getStart());
             list.add(page.getLimit());
         }
         ResultSet rs = JdbcUtil.query(sql, list.toArray());
@@ -69,7 +69,7 @@ public class HouseholdDao {
     public int getCount(String checktexxt) throws SQLException {
         String sql = "select count(*) from Household where isdelete = 0 ";
         if (checktexxt != null) {
-            sql = sql + " and HouserholderName like ?";
+            sql = sql + " and HouseholderName like ?";
             String find = "%" + checktexxt + "%";
             ResultSet rs = JdbcUtil.query(sql, find);
             int cnt = 0;
@@ -88,35 +88,42 @@ public class HouseholdDao {
     /**
      * - HouseholdID: 主键，户籍编号 (INT)
      * - HouseholdAddress: 户籍地址  (VARCHAR)
-     * - HouserholderName: 户主姓名  (VARCHAR)
+     * - HouseholderName: 户主姓名  (VARCHAR)
      * - HouseholdPopulation: 户籍人口数  (INT)
      * - HouseholdPersonID: 外键，关联到人口表 (INT)
      */
     //增加
     public int add(Household hou) {
-        String sql = " insert into Household ( HouseholdAddress, HouserholderName, HouseholdPopulation,  HouseholdPersonID)";
-        int res = JdbcUtil.update(sql,hou.getHouseholdAddress(),hou.getHouserholderName(),hou.getHouseholdPopulation(),hou.getHouseholdPersonID());
+        System.out.println("check:");
+        String sql = "INSERT INTO Household (HouseholdAddress, HouseholderName, HouseholdPopulation, HouseholdPersonID) VALUES (?, ?, ?, ?)";
+        int res = JdbcUtil.update(sql,
+                hou.getHouseholdaddress(),
+                hou.getHouseholdername(),
+                hou.getHouseholdpopulation(),
+                hou.getHouseholdpersonid()
+        );
         return res;
     }
 
     //删除
 
     public int delete(int id) {
-        String sql = "update person set isdelete=1 where HouseholdID = ? ";
+        String sql = "update household set isdelete=1 where HouseholdID = ? ";
         int res = JdbcUtil.update(sql, id);
         return res;
     }
 
     public int delete(Household household) {
-        String sql = "update person set isdelete=1 where HouseholdID = ? ";
-        int res = JdbcUtil.update(sql, household.getHouseholdID());
+        String sql = "update household set isdelete=1 where HouseholdID = ? ";
+        System.out.println(household.getHouseholdid());
+        int res = JdbcUtil.update(sql, household.getHouseholdid());
         return res;
     }
     //修改
 
     public int edit(Household hou) {
-        String sql = "update person set HouseholdAddress =? HouserholderName =? HouseholdPopulation =?  HouseholdPersonID =? ";
-        int res = JdbcUtil.update(sql,hou.getHouseholdAddress(),hou.getHouserholderName(),hou.getHouseholdPopulation(),hou.getHouseholdPersonID() );
+        String sql = "update household set HouseholdAddress =? HouseholderName =? HouseholdPopulation =?  HouseholdPersonID =? ";
+        int res = JdbcUtil.update(sql,hou.getHouseholdaddress(),hou.getHouseholdername(),hou.getHouseholdpopulation(),hou.getHouseholdpersonid() );
         return res;
     }
 }

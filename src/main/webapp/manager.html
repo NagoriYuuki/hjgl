@@ -16,7 +16,6 @@
     <th lay-data="{field:'adminname'}">名字</th>
     <th lay-data="{field:'adminaccount'}">账号</th>
     <th lay-data="{field:'adminpassword'}">密码</th>
-
     <th lay-data="{toolbar:'#linetools'}">操作</th>
   </tr>
   </thead>
@@ -24,43 +23,43 @@
 <!--新增窗口组件-->
 <div id="addWin" lay-filter="addWin" class="layui-form" style="display: none">
   <div class="layui-form-item">
-    <label class="layui-form-label">名字check</label>
+    <label class="layui-form-label">名字</label>
     <div class="layui-input-block">
-      <input type="text" name="name" placeholder="请输入名字" autocomplete="off" class="layui-input">
+      <input type="text" name="adminname" placeholder="请输入名字" autocomplete="off" class="layui-input">
     </div>
   </div>
   <div class="layui-form-item">
     <label class="layui-form-label">账号</label>
     <div class="layui-input-block">
-      <input type="text" name="email" placeholder="请输入账号" autocomplete="off" class="layui-input">
+      <input type="text" name="adminaccount" placeholder="请输入账号" autocomplete="off" class="layui-input">
     </div>
   </div>
   <div class="layui-form-item">
     <label class="layui-form-label">密码</label>
     <div class="layui-input-block">
-      <input type="text" name="phone"  placeholder="请输入密码" autocomplete="off" class="layui-input">
+      <input type="text" name="adminpassword"  placeholder="请输入密码" autocomplete="off" class="layui-input">
     </div>
   </div>
 </div>
 <!--编辑窗口组件-->
 <div id="editWin" lay-filter="editWin" class="layui-form" style="display: none">
-  <input type="hidden" name="userid" >
+  <input type="hidden" name="adminid" >
   <div class="layui-form-item">
     <label class="layui-form-label">名字</label>
     <div class="layui-input-block">
-      <input type="text" name="name" placeholder="请输入名字" autocomplete="off" class="layui-input">
+      <input type="text" name="adminname" placeholder="请输入名字" autocomplete="off" class="layui-input">
     </div>
   </div>
   <div class="layui-form-item">
     <label class="layui-form-label">email</label>
     <div class="layui-input-block">
-      <input type="text" name="email" placeholder="请输入email" autocomplete="off" class="layui-input">
+      <input type="text" name="adminaccount" placeholder="请输入账号" autocomplete="off" class="layui-input">
     </div>
   </div>
   <div class="layui-form-item">
     <label class="layui-form-label">电话</label>
     <div class="layui-input-block">
-      <input type="text" name="phone"  placeholder="请输入电话" autocomplete="off" class="layui-input">
+      <input type="text" name="adminpassword"  placeholder="请输入密码" autocomplete="off" class="layui-input">
     </div>
   </div>
 </div>
@@ -104,7 +103,7 @@
                   var formdata=form.val("addWin");
                   $.ajax({
                       method:'post',
-                      url:'user/add',
+                      url:'admin/add',
                       data:formdata,
                       success:function(result){
                           //关闭对话框
@@ -142,7 +141,7 @@
                   //提交数据
                   $.ajax({
                       method:"post",
-                      url:"user/edit",
+                      url:"admin/edit",
                       data:formdata,
                       success:function(result){
                           //刷新表格
@@ -162,7 +161,7 @@
           layer.confirm("确认要删除该行数据吗?",function(){
               //点击确认后执行的代码
               $.ajax({
-                  url:"user/delete",
+                  url:"admin/delete",
                   data:data,
                   success:function (){
                       layer.closeAll();

@@ -13,32 +13,26 @@ public class HouseholdCancellation
      * - HouseholdCancellationUserID: 外键，关联到用户表 (INT)
      * - HouseholdCancellationAdminID: 外键，关联到管理员表 (INT)
      */
-    private int HouseholdCancellationID;
-    private Date HouseholdCancellationTime;
-    private Date HouseholdCancellationRteturnTime;
-    private String HouseholdCancellationStatus;
-    private int HouseholdCancellationHouseholdID;
-    private int HouseholdCancellationUserID;
-    private int HouseholdCancellationAdminID;
+
+    private int householdcancellationid;
+    private Date householdcancellationtime;
+    private Date householdcancellationrteturntime;
+    private String householdcancellationstatus;
+    private int householdcancellationhouseholdid;
+
+    private int householdcancellationuserid;
+    private int householdcancellationadminid;
 
     private Person person;
     private User user;
     private Admin admin;
 
-    public Date getHouseholdCancellationRteturnTime() {
-        return HouseholdCancellationRteturnTime;
+    public Admin getAdmin() {
+        return admin;
     }
 
-    public void setHouseholdCancellationRteturnTime(Date householdCancellationRteturnTime) {
-        HouseholdCancellationRteturnTime = householdCancellationRteturnTime;
-    }
-
-    public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
     }
 
     public User getUser() {
@@ -49,62 +43,67 @@ public class HouseholdCancellation
         this.user = user;
     }
 
-    public Admin getAdmin() {
-        return admin;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setAdmin(Admin admin) {
-        this.admin = admin;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
-    public int getHouseholdCancellationID() {
-        return HouseholdCancellationID;
+    public int getHouseholdcancellationadminid() {
+        return householdcancellationadminid;
     }
 
-    public void setHouseholdCancellationID(int householdCancellationID) {
-        HouseholdCancellationID = householdCancellationID;
+    public void setHouseholdcancellationadminid(int householdcancellationadminid) {
+        this.householdcancellationadminid = householdcancellationadminid;
     }
 
-    public Date getHouseholdCancellationTime() {
-        return HouseholdCancellationTime;
+    public int getHouseholdcancellationUserid() {
+        return householdcancellationuserid;
     }
 
-    public void setHouseholdCancellationTime(Date householdCancellationTime) {
-        HouseholdCancellationTime = householdCancellationTime;
+    public void setHouseholdcancellationUserid(int householdcancellationUserid) {
+        this.householdcancellationuserid = householdcancellationUserid;
     }
 
-    public String getHouseholdCancellationStatus() {
-        return HouseholdCancellationStatus;
+    public int getHouseholdcancellationhouseholdid() {
+        return householdcancellationhouseholdid;
     }
 
-    public void setHouseholdCancellationStatus(String householdCancellationStatus) {
-        HouseholdCancellationStatus = householdCancellationStatus;
+    public void setHouseholdcancellationhouseholdid(int householdcancellationhouseholdid) {
+        this.householdcancellationhouseholdid = householdcancellationhouseholdid;
     }
 
-    public int getHouseholdCancellationHouseholdID() {
-        return HouseholdCancellationHouseholdID;
+    public String getHouseholdcancellationstatus() {
+        return householdcancellationstatus;
     }
 
-    public void setHouseholdCancellationHouseholdID(int householdCancellationHouseholdID) {
-        HouseholdCancellationHouseholdID = householdCancellationHouseholdID;
+    public void setHouseholdcancellationstatus(String householdcancellationstatus) {
+        this.householdcancellationstatus = householdcancellationstatus;
     }
 
-    public int getHouseholdCancellationUserID() {
-        return HouseholdCancellationUserID;
+    public Date getHouseholdcancellationrteturntime() {
+        return householdcancellationrteturntime;
     }
 
-    public void setHouseholdCancellationUserID(int householdCancellationUserID) {
-        HouseholdCancellationUserID = householdCancellationUserID;
+    public void setHouseholdcancellationrteturntime(Date householdcancellationrteturntime) {
+        this.householdcancellationrteturntime = householdcancellationrteturntime;
     }
 
-    public int getHouseholdCancellationAdminID() {
-        return HouseholdCancellationAdminID;
+    public Date getHouseholdcancellationtime() {
+        return householdcancellationtime;
     }
 
-    public void setHouseholdCancellationAdminID(int householdCancellationAdminID) {
-        HouseholdCancellationAdminID = householdCancellationAdminID;
+    public void setHouseholdcancellationtime(Date householdcancellationtime) {
+        this.householdcancellationtime = householdcancellationtime;
     }
 
+    public int getHouseholdcancellationid() {
+        return householdcancellationid;
+    }
 
-
+    public void setHouseholdcancellationid(int householdcancellationid) {
+        this.householdcancellationid = householdcancellationid;
+    }
 }

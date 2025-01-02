@@ -21,14 +21,17 @@ import java.util.List;
  * - HouseholdCancellationAdminID: 外键，关联到管理员表 (INT)
  */
 @Repository
+
 public class HouseholdCancellationDao {
     @OperationLog(description = "同意")
     public int agree(HouseholdCancellation householdCancellation ,HouseholdDao householdDao) throws SQLException, IllegalAccessException, InstantiationException {
         String sql="update HouseholdCancellation set HouseholdCancellationRteturnTime = now() and HouseholdCancellationStatus = ? where HouseholdCancellationID = ? ";
-        int res = JdbcUtil.update(sql,"agree",householdCancellation.getHouseholdCancellationID());
+        int res = JdbcUtil.update(sql,"agree",householdCancellation.getHouseholdcancellationid());
         String sql1= "select * from Household where Householdid = ?";
-        ResultSet rs = JdbcUtil.query(sql1,householdCancellation.getHouseholdCancellationHouseholdID());
+        ResultSet rs = JdbcUtil.query(sql1,householdCancellation.getHouseholdcancellationhouseholdid());
+        System.out.println(householdCancellation.getHouseholdcancellationhouseholdid());
         List<Household> list=JdbcUtil.convertResultSetToList(rs, Household.class);
+        System.out.println(list.size());
         Household household=list.get(0);
         householdDao.delete(household);
         return res;
@@ -37,53 +40,33 @@ public class HouseholdCancellationDao {
     @OperationLog(description = "拒绝")
     public int refuse(HouseholdCancellation householdCancellation) {
         String sql = "update HouseholdCancellation set HouseholdCancellationStatus = ? and HouseholdCancellationRteturnTime = now() where HouseholdCancellationID = ? ";
-        int res = JdbcUtil.update(sql,"refuse", householdCancellation.getHouseholdCancellationID());
+        int res = JdbcUtil.update(sql,"refuse", householdCancellation.getHouseholdcancellationid());
         return res;
     }
 
 
     public List getRecord(User user, Admin admin, Page page) throws SQLException, IllegalAccessException, InstantiationException {
-        String sql="select a.* from HouseholdCancellation a left join user b on a.HouseholdCancellationUserID = b.userid left join a.HouseholdCancellationAdminID = c.adminid";
+        String sql="select * from HouseholdCancellation ";
+        System.out.println(user);
         List params=new ArrayList();
-        if(user!=null&&user.getUserName()!=null){
-            sql=sql+" where b.name like ? ";
-            params.add("%"+user.getUserName()+"%");
-        }
-        if(admin!=null&&admin.getAdminname()!=null){
-            if(!sql.contains("where")) sql=sql+" where ";
-            sql=sql+" and c.adminname like ? ";
-            params.add("%"+admin.getAdminname()+"%");
-        }
-        sql=sql+" order by status asc ";//排序
-        if(page!=null&&page.getPage()>0){
-            sql=sql+" limit ?,? ";
-            params.add(page.getStart());
-            params.add(page.getLimit());
-
-        }
+        System.out.println(sql);
         ResultSet rs = JdbcUtil.query(sql, params.toArray());
+
         List<HouseholdCancellation> list = JdbcUtil.convertResultSetToList(rs, HouseholdCancellation.class);
+        System.out.println(1111111);
         JdbcUtil.close(rs);
+        System.out.println(list.size());
         return list;
     }
 
     public int getCount(User user, Admin admin) throws SQLException, IllegalAccessException, InstantiationException {
-        String sql = "select count(*) from HouseholdCancellation a left join user b on a.HouseholdCancellationPersonID = b.userid left join book c on a.HouseholdCancellationPersonID = c.PersonID ";
+        String sql="select * from HouseholdCancellation ";
         List params = new ArrayList();
-        if (user != null && user.getUserName() != null) {
-            sql = sql + " where b.UserName like ? ";
-            params.add("%" + user.getUserName() + "%");
-        }
-        if (admin != null &&admin.getAdminname() != null) {
-            if (!sql.contains("where")) {
-                sql = sql + " where ";
-            }
-            sql = sql + " and c.adminname like ?";
-            params.add("%" + admin.getAdminname() + "%");
-        }
         ResultSet rs = JdbcUtil.query(sql, params.toArray());
-        rs.next();
-        int count = rs.getInt(1);
+        int count=0;
+        while (rs.next()){
+            count++;
+        }
         JdbcUtil.close(rs);
         return count;
     }

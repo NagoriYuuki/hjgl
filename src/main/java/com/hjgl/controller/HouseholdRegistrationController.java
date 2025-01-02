@@ -49,8 +49,8 @@ public class HouseholdRegistrationController {
     public RestResult getlist(User user , Admin admin, Page page) throws SQLException, IllegalAccessException, InstantiationException {
         List<HouseholdCancellation> list=hrD.getRecord(user,admin,page);
         for(HouseholdCancellation i:list){
-            int userid=i.getHouseholdCancellationUserID();
-            int adminid=i.getHouseholdCancellationAdminID();
+            int userid=i.getHouseholdcancellationUserid();
+            int adminid=i.getHouseholdcancellationadminid();
             i.setUser(userDao.getUserByUserid(userid));
             i.setAdmin(adminDao.getAdminByAdminid(adminid));
         }
