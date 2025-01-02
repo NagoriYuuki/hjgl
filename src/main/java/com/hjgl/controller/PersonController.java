@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -27,6 +28,10 @@ public class PersonController {
     public RestResult getlist(Page page, String checktext) throws SQLException, IllegalAccessException, InstantiationException {
         List list = personDao.getlistname(page, checktext);
         int count = personDao.getCountname(checktext);
+        System.out.println("count: " + count);
+        if (count == 0) {
+            list = new ArrayList(); // 或者返回 Collections.emptyList()
+        }
         RestResult result = new RestResult(count, list);
         return result;
     }

@@ -85,9 +85,9 @@ public class PersonDao {
         ResultSet rs=JdbcUtil.query(sql,list.toArray());
 
         List<Person> per= JdbcUtil.convertResultSetToList(rs,Person.class);
-        Person  p= per.get(0);
+//        Person  p= per.get(0);
 
-        System.out.println(p.getPersonname()+"-----");
+//        System.out.println(p.getPersonname()+"-----");
 
         JdbcUtil.close(rs);
         return per;
@@ -95,15 +95,18 @@ public class PersonDao {
     //查询
     public int getCountname(String checktexxt) throws SQLException {
         String sql="select count(*) from Person where isdelete = 0";
+        System.out.println(checktexxt+"  -=======================");
         if(checktexxt!=null){
             sql=sql+" and personname like ?";
             String find="%"+checktexxt+"%";
             ResultSet rs=JdbcUtil.query(sql,find);
+
             int cnt=0;
             if(rs.next()){
                 cnt=rs.getInt(1);
 
             }
+            System.out.println("getccountname: "+cnt);
             return  cnt;
         }
         ResultSet rs=JdbcUtil.query(sql);
@@ -176,6 +179,8 @@ public class PersonDao {
     //删除
 
     public int delete(Person person){
+        System.out.println("delete: " + person.getPersonid());
+//        System.out.println(person.getPersonid());
         String sql="update person set isdelete=1 where personid =? ";
         int res=JdbcUtil.update(sql,person.getPersonid());
         return res;
@@ -185,7 +190,9 @@ public class PersonDao {
 
     public int edit(Person person) {
         System.out.println(person.getPersonname());
-        String sql = "update person set personname=?, persongender=?, personbirthday=?, personidcardnumber=?, personhouseholdid=coalesce(?, null) where personid = ?";
+        System.out.println("householdid: " + person.getPersonhouseholdid());
+        System.out.println("personid: " + person.getPersonid());
+        String sql = "update person set personname=?, persongender=?, personbirthday=?, personidcardnumber=?, personhouseholdid=? where personid = ?";
         int res = JdbcUtil.update(sql, person.getPersonname(), person.getPersongender(), person.getPersonbirthday(), person.getPersonidcardnumber(), person.getPersonhouseholdid(), person.getPersonid());
         return res;
     }

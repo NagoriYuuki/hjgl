@@ -47,8 +47,9 @@
 </div>
 <!--新增窗口组件-->
 <div id="editWin" lay-filter="editWin" class="layui-form" style="display: none">
-
-
+    <div id="editWin" lay-filter="editWin" class="layui-form" style="display: none">
+        <input type="hidden" name="personid">
+    </div>
     <div class="layui-form-item">
         <label class="layui-form-label">姓名</label>
         <div class="layui-input-block">
@@ -91,7 +92,7 @@
 
 </div>
 <!--编辑窗口组件-->
-<<div id="addWin" lay-filter="addWin" class="layui-form" style="display: none">
+<div id="addWin" lay-filter="addWin" class="layui-form" style="display: none">
 
 
     <div class="layui-form-item">
@@ -161,8 +162,6 @@
             lay-event="edit">编辑</button>
     <button type="button" class="layui-btn layui-btn-xs layui-bg-red"
             lay-event="delete">删除</button>
-    <button type="button" class="layui-btn layui-btn-xs layui-bg-orange"
-            lay-event="borrow">借阅</button>
 </script>
 <script src="static/layui/layui.all.js"></script>
 <script>
@@ -318,7 +317,7 @@
                 //点击确认后执行的代码
                 $.ajax({
                     url:"person/delete",
-                    data:{bookid:data.bookid},
+                    data:{personid:data.personid},
                     success:function (){
                         layer.closeAll();
                         table.reload("datalist");
