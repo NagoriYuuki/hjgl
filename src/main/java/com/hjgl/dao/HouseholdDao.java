@@ -18,7 +18,7 @@ public class HouseholdDao {
         String sql="select * from household where HouseholdID = ?";
         List pa=new ArrayList();
         if(person!=null){
-            pa.add(person.getPersonHouseholdID());
+            pa.add(person.getPersonhouseholdid());
         }
         sql=sql+" order by status asc ";
         if(page!=null&&page.getPage()>0){

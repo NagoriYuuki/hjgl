@@ -19,21 +19,23 @@ public class LoginController {
 
     @RequestMapping("doLogin")
     public String doLogin(Admin admin, HttpSession session) throws SQLException, IllegalAccessException, InstantiationException {
-//        System.out.println(admin.getAdminname());
-//        System.out.println(admin.getAdminaccount  ());
+        System.out.println(admin.getAdminaccount());
         List<Admin> list = dao.getAdminByAccount(admin.getAdminaccount());
-//        System.out.println(list.size());
+        System.out.println(list.size());
+
         if (list.size() == 1) {
             Admin adminD = list.get(0);
             String password = admin.getAdminpassword();
+
             String passwordD = adminD.getAdminpassword();
+
+
             if (password != null && password.equals(passwordD)) {
                 session.setAttribute("loginadmin", adminD);
                 return "success";
             }
         }
         return "fail";
-
     }
 
     @RequestMapping("islogin")

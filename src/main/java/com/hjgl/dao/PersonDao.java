@@ -5,10 +5,8 @@ import com.hjgl.bean.Household;
 import com.hjgl.bean.Person;
 import com.hjgl.util.JdbcUtil;
 import com.hjgl.util.Page;
-import com.hjgl.util.RestResult;
 import org.springframework.stereotype.Repository;
 
-import javax.annotation.security.PermitAll;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -26,7 +24,7 @@ public class PersonDao {
     }
 
     public List<Person> getHouselist(Household h, Page page) throws SQLException, IllegalAccessException, InstantiationException {
-        String  sql="select * from person where isdelete id = 0 ";
+        String  sql="select * from person where isdelete = 0 ";
         List parms=new ArrayList();
         if(h!=null){
             sql=sql+" and PersonHouseholdID = ? ";
@@ -66,12 +64,13 @@ public class PersonDao {
     //查询名称
 
     public List<Person> getlistname(Page page, String checktext ) throws SQLException, IllegalAccessException, InstantiationException {
-        String sql="select * from Person ";
+        String sql="select * from person ";
         List list=new ArrayList();
-        if(checktext!=null){
-            sql=sql+" where personname like ?";
-            list.add("%"+checktext+"%");
+        if (checktext != null && !checktext.isEmpty()) {
+            sql = sql + " where personname like ?";
+            list.add("%" + checktext + "%");
         }
+
         if(sql.contains("where")){
             sql=sql+" and isdelete=0 ";
         }else {
@@ -79,11 +78,17 @@ public class PersonDao {
         }
         if(page!=null){
             sql=sql+" limit ?,? ";
-            list.add(page.getPage());
+            list.add(page.getStart());
             list.add(page.getLimit());
         }
+        System.out.println(sql);
         ResultSet rs=JdbcUtil.query(sql,list.toArray());
+
         List<Person> per= JdbcUtil.convertResultSetToList(rs,Person.class);
+        Person  p= per.get(0);
+
+        System.out.println(p.getPersonname()+"-----");
+
         JdbcUtil.close(rs);
         return per;
     }
@@ -160,9 +165,11 @@ public class PersonDao {
 
     //增加
 
-    public int add(Person person){
-        String sql=" insert into person (personname, persongender, persongender, personBithday, personidcardnumber, personhouseholdid)";
-        int res=JdbcUtil.update(sql,person.getPersonName(),person.getPersonGender(),person.getPersonBirthday(),person.getPersonIDCardNumber(),person.getPersonHouseholdID());
+    public int add(Person person) {
+        System.out.println("householdid: " + person.getPersonhouseholdid());
+        System.out.println(person.getPersongender());
+        String sql = "INSERT INTO person (personname, persongender, personbirthday, personidcardnumber, personhouseholdid) VALUES(?,?,?,?,?)";
+        int res = JdbcUtil.update(sql, person.getPersonname(), person.getPersongender(), person.getPersonbirthday(), person.getPersonidcardnumber(), person.getPersonhouseholdid());
         return res;
     }
 
@@ -170,15 +177,18 @@ public class PersonDao {
 
     public int delete(Person person){
         String sql="update person set isdelete=1 where personid =? ";
-        int res=JdbcUtil.update(sql,person.getPersonID());
+        int res=JdbcUtil.update(sql,person.getPersonid());
         return res;
     }
 
     //修改
 
-    public int edit(Person person){
-        String sql="update person set personname=? persongender=? personbitrhday=? personidcardnumber=? personhouseholdid=? where personid = ? ";
-        int res=JdbcUtil.update(sql,person.getPersonName(),person.getPersonGender(),person.getPersonBirthday(),person.getPersonIDCardNumber(),person.getPersonHouseholdID(),person.getPersonID());
-        return  res;
+    public int edit(Person person) {
+        System.out.println(person.getPersonname());
+        String sql = "update person set personname=?, persongender=?, personbirthday=?, personidcardnumber=?, personhouseholdid=coalesce(?, null) where personid = ?";
+        int res = JdbcUtil.update(sql, person.getPersonname(), person.getPersongender(), person.getPersonbirthday(), person.getPersonidcardnumber(), person.getPersonhouseholdid(), person.getPersonid());
+        return res;
     }
+
+
 }

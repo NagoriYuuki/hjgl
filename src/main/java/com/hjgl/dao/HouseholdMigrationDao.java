@@ -24,7 +24,7 @@ public class HouseholdMigrationDao {
         ResultSet rs=JdbcUtil.query(sql1,householdMigration.getHouseholdMigrationNewHouseholdID());
         List<Person> list=JdbcUtil.convertResultSetToList(rs,Person.class);
         Person p=list.get(0);
-        p.setPersonHouseholdID(householdMigration.getHouseholdMigrationNewHouseholdID());
+        p.setPersonhouseholdid(householdMigration.getHouseholdMigrationNewHouseholdID());
         personDao.edit(p);
         return res;
     }

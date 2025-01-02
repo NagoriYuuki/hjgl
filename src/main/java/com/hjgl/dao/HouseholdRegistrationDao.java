@@ -22,7 +22,7 @@ public class HouseholdRegistrationDao {
         ResultSet rs=JdbcUtil.query(sql1,householdRegistration.getHouseholdRegistrationPersonID());
         List<Person> list=JdbcUtil.convertResultSetToList(rs,Person.class);
         Person p=list.get(0);
-        p.setPersonHouseholdID(householdRegistration.getHouseholdRegistrationHouseholdID());
+        p.setPersonhouseholdid(householdRegistration.getHouseholdRegistrationHouseholdID());
         personDao.edit(p);
         return res;
     }

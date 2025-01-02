@@ -1,5 +1,7 @@
 package com.hjgl.bean;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class Person
@@ -12,59 +14,69 @@ public class Person
      * - PersonIDCardNumber: 身份证号  (VARCHAR)
      * - PersonHouseholdID: 外键，关联到户籍表 (INT)
      */
-    private int PersonID;
-    private String PersonName;
-    private String PersonGender;
-    private Date PersonBirthday;
-    private String PersonIDCardNumber;
-    private int PersonHouseholdID;
+    private int personid;
+    private String personname;
+    private String persongender;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date personbirthday;
+    private String personidcardnumber;
+    private int personhouseholdid;
+    private int isdelete;
 
-    public int getPersonID() {
-        return PersonID;
+    public int getIsdelete() {
+        return isdelete;
     }
 
-    public void setPersonID(int personID) {
-        PersonID = personID;
+    public void setIsdelete(int isdelete) {
+        this.isdelete = isdelete;
     }
 
-    public String getPersonName() {
-        return PersonName;
+    public int getPersonid() {
+        return personid;
     }
 
-    public void setPersonName(String personName) {
-        PersonName = personName;
+    public void setPersonid(int personid) {
+        this.personid = personid;
     }
 
-    public String getPersonGender() {
-        return PersonGender;
+    public String getPersonname() {
+        return personname;
     }
 
-    public void setPersonGender(String personGender) {
-        PersonGender = personGender;
+    public void setPersonname(String personname) {
+        this.personname = personname;
     }
 
-    public Date getPersonBirthday() {
-        return PersonBirthday;
+    public String getPersongender() {
+        return persongender;
     }
 
-    public void setPersonBirthday(Date personBirthday) {
-        PersonBirthday = personBirthday;
+    public void setPersongender(String persongender) {
+        this.persongender = persongender;
     }
 
-    public String getPersonIDCardNumber() {
-        return PersonIDCardNumber;
+    public Date getPersonbirthday() {
+        return personbirthday;
     }
 
-    public void setPersonIDCardNumber(String personIDCardNumber) {
-        PersonIDCardNumber = personIDCardNumber;
+    public void setPersonbirthday(Date personbirthday) {
+        this.personbirthday = personbirthday;
     }
 
-    public int getPersonHouseholdID() {
-        return PersonHouseholdID;
+    public String getPersonidcardnumber() {
+        return personidcardnumber;
     }
 
-    public void setPersonHouseholdID(int personHouseholdID) {
-        PersonHouseholdID = personHouseholdID;
+    public void setPersonidcardnumber(String personidcardnumber) {
+        this.personidcardnumber = personidcardnumber;
+    }
+
+    public int getPersonhouseholdid() {
+        return personhouseholdid;
+    }
+
+    public void setPersonhouseholdid(int personhouseholdid) {
+        this.personhouseholdid = personhouseholdid;
     }
 
 
