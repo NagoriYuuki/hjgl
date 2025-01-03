@@ -52,7 +52,7 @@ public class HouseholdMigrationController {
     }
 
     @RequestMapping("refuse")
-    public int refuse(HouseholdMigration householdMigration){
+    public int refuse(@RequestBody HouseholdMigration householdMigration){
         return hmD.refuse(householdMigration);
     }
 

@@ -31,7 +31,7 @@ public class HouseholdCancellationDao {
         System.out.println("houseid:-----> "+ householdCancellation.getHouseholdcancellationhouseholdid());
         System.out.println("adminid:-----> "+ householdCancellation.getHouseholdcancellationadminid());
         // 修正 SQL 语法，使用逗号分隔 SET 子句
-        String sql = "UPDATE HouseholdCancellation SET HouseholdCancellationRteturnTime = NOW(), HouseholdCancellationStatus = ? WHERE HouseholdCancellationID = ?";
+        String sql = "UPDATE HouseholdCancellation SET  HouseholdCancellationStatus = ? WHERE HouseholdCancellationID = ?";
         int res = JdbcUtil.update(sql, "已同意", householdCancellation.getHouseholdcancellationid());
 
         // 获取关联的 Household 记录
@@ -51,8 +51,8 @@ public class HouseholdCancellationDao {
 
     @OperationLog(description = "拒绝")
     public int refuse(HouseholdCancellation householdCancellation) {
-        String sql = "update HouseholdCancellation set HouseholdCancellationStatus = ? and HouseholdCancellationRteturnTime = now() where HouseholdCancellationID = ? ";
-        int res = JdbcUtil.update(sql,"refuse", householdCancellation.getHouseholdcancellationid());
+        String sql = "update HouseholdCancellation set HouseholdCancellationStatus = ? where HouseholdCancellationID = ? ";
+        int res = JdbcUtil.update(sql,"已拒绝", householdCancellation.getHouseholdcancellationid());
         return res;
     }
 
@@ -93,6 +93,7 @@ public class HouseholdCancellationDao {
 
         return res;
     }
+
 
 
 

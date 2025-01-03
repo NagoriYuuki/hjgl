@@ -25,7 +25,7 @@ public class HouseholdMigrationDao {
     @OperationLog(description = "拒绝")
     public int refuse(HouseholdMigration householdMigration) {
         String sql = "update HouseholdMigration set HouseholdMigrationStatus = ? where HouseholdMigrationID = ? ";
-        int res = JdbcUtil.update(sql,"refuse", householdMigration.getHouseholdmigrationid());
+        int res = JdbcUtil.update(sql,"已拒绝", householdMigration.getHouseholdmigrationid());
         return res;
     }
 

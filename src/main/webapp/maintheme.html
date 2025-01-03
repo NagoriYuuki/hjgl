@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系统介绍</title>
+    <link rel="stylesheet" href="static/layui/css/layui.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            animation: fadeIn 1.2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #ffffff, #f9f9f9);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1.2s ease-in-out;
+        }
+        .container h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+        .container p {
+            line-height: 1.8;
+            color: #555;
+            text-align: center;
+        }
+        .features, .help {
+            margin-top: 30px;
+        }
+        .features h2, .help h2 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #1E9FFF;
+            border-left: 4px solid #1E9FFF;
+            padding-left: 10px;
+        }
+        .features ul, .help ol {
+            padding-left: 20px;
+            list-style: none;
+        }
+        .features ul li, .help ol li {
+            margin-bottom: 15px;
+            background: #f9f9f9;
+            border: 1px solid #eaeaea;
+            border-radius: 8px;
+            padding: 10px 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .features ul li:hover, .help ol li:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .help ol li::before {
+            content: counter(step, upper-roman);
+            counter-increment: step;
+            background: #1E9FFF;
+            color: #fff;
+            border-radius: 50%;
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            text-align: center;
+            line-height: 24px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>欢迎使用户籍管理系统</h1>
+    <p>通过本系统，您可以轻松完成户籍相关信息的管理工作，提升效率，优化管理流程。</p>
+
+    <div class="features">
+        <h2>系统主要功能</h2>
+        <ul>
+            <li>人口信息的增删改查</li>
+            <li>户籍信息的管理与查询</li>
+            <li>支持户籍迁移与更正</li>
+            <li>户籍注销与登记的集中管理</li>
+            <li>导出人口和户籍数据到文件</li>
+        </ul>
+    </div>
+
+    <div class="help">
+        <h2>使用帮助</h2>
+        <ol>
+            <li>登录系统后，可在页面顶部查看当前登录管理员的信息。</li>
+            <li>通过左侧导航栏选择所需功能模块，例如人口管理或户籍管理。</li>
+            <li>点击相应的功能模块后，系统会在主界面中加载对应的操作页面。</li>
+            <li>所有的操作页面支持增删改查功能，可按需操作数据。</li>
+            <li>导出数据：在各功能模块中完成操作后，点击页面上的“导出”按钮即可将数据保存为文件。</li>
+            <li>如需退出系统，请点击页面右上角的“退出”按钮。</li>
+            <li>如果遇到任何问题，可联系管理员进行处理。</li>
+        </ol>
+    </div>
+
+    <div class="footer">
+        &copy; 2025 户籍管理系统 | ZTT由团队精心设计与开发
+    </div>
+</div>
+</body>
+</html>

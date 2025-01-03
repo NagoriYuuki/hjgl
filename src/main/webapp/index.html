@@ -6,6 +6,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>张天天界面</title>
     <link rel="stylesheet" href="static/layui/css/layui.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5;
+        }
+        .layui-layout-admin .layui-header {
+            background-color: #393D49; /* 头部背景色 */
+        }
+        .layui-header .layui-nav .layui-nav-bar {
+            background-color: #1E9FFF; /* 鼠标经过项 */
+        }
+        .layui-header .layui-nav-item a {
+            color: #fff !important; /* 顶部文字颜色 */
+        }
+        .layui-body {
+            background-color: #fff;
+            margin: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+        .layui-footer {
+            text-align: center;
+        }
+        .layui-nav-tree .layui-nav-child {
+            background-color: #f8f8f8; /* 左侧二级菜单背景 */
+        }
+        .layui-side-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .layui-side-scroll::-webkit-scrollbar-track {
+            background: #e4e4e4;
+        }
+        .layui-side-scroll::-webkit-scrollbar-thumb {
+            background: #ccc;
+        }
+    </style>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -15,10 +52,7 @@
 
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
-                <a href="javascript:;" _loginname>
-<!--                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">-->
-                    贤心
-                </a>
+                <a href="javascript:;">欢迎您，<span _loginname></span></a>
 
             </li>
             <li class="layui-nav-item"><a href="javascript:;" _loginout>退出</a></li>
@@ -40,7 +74,7 @@
                         <dd><a href="javascript:;" _url="householdcorrection.html">户籍更正管理</a></dd>
                         <dd><a href="javascript:;" _url="househholdcancellation.html">户籍注销管理</a></dd>
                         <dd><a href="javascript:;" _url="realAdmin.html">管理员管理</a></dd>
-                        <dd><a href="javascript:;" _url="echarts.html">图表统计</a></dd>
+                        <dd><a href="javascript:;" _url="maintheme.html">首页</a></dd>
                     </dl>
                 </li>
             </ul>
@@ -49,7 +83,7 @@
 
     <div class="layui-body">
         <!-- 内容主体区域 -->
-        <iframe src="echarts.html" style="width:98%;height:98%;border: none;" id="main"></iframe>
+        <iframe src="maintheme.html" style="width:98%;height:98%;border: none;" id="main"></iframe>
     </div>
 
     <div class="layui-footer">

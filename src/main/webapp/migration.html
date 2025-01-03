@@ -73,7 +73,7 @@
     <button type="button" class="layui-btn layui-btn-xs layui-bg-orange"
             lay-event="agree">同意</button>
     {{#         }     }}
-    <!--    <button type="button" class="layui-btn layui-btn-xs layui-bg-red" lay-event="refuse">拒绝</button>-->
+        <button type="button" class="layui-btn layui-btn-xs layui-bg-red" lay-event="refuse">拒绝</button>
     <!--    <button type="button" class="layui-btn layui-btn-xs layui-bg-gray" lay-event="delete">删除</button>-->
 </script>
 
@@ -146,8 +146,18 @@
             layer.confirm("确认要删除该行数据吗?",function(){
                 //点击确认后执行的代码
                 $.ajax({
+                    method:"post",
                     url:"HouseholdMigration/refuse",
-                    data:data,
+                    headers: {
+                        "Content-Type": "application/json" // 设置请求头
+                    },
+                    data: JSON.stringify({
+                        householdmigrationid: data.householdmigrationid,
+                        householdmigrationuserid: data.person.personid,
+                        householdmigrationnewhouseholdid: data.householdmigrationnewhouseholdid,
+                        householdmigrationadminid: data.admin.adminid,
+                        householdmigrationstatus: "已拒绝"
+                    }),
                     success:function (){
                         layer.closeAll();
                         table.reload("datalist");

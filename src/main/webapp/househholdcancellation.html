@@ -62,10 +62,11 @@
 </div> -->
 
 <!--表格头部工具栏-->
-<!--<script type="text/html" id="toptools">-->
-<!--    <button type="button" class="layui-btn layui-btn-sm"-->
-<!--            lay-event="add">新增</button>-->
-<!--</script>-->
+<script type="text/html" id="toptools">
+    <div class="layui-form-item">
+        <!-- 这里可以添加其他的查询功能，比如查询名字、户籍编号等 -->
+    </div>
+</script>
 
 <!--表格行内工具栏-->
 <script type="text/html" id="linetools">
@@ -73,7 +74,7 @@
     <button type="button" class="layui-btn layui-btn-xs layui-bg-orange"
             lay-event="agree">同意</button>
     {{#         }     }}
-<!--    <button type="button" class="layui-btn layui-btn-xs layui-bg-red" lay-event="refuse">拒绝</button>-->
+    <button type="button" class="layui-btn layui-btn-xs layui-bg-red" lay-event="refuse">拒绝</button>
 <!--    <button type="button" class="layui-btn layui-btn-xs layui-bg-gray" lay-event="delete">删除</button>-->
 </script>
 
@@ -105,7 +106,7 @@
         }
         name = $("[name='name']").val(name);
         booktitle = $("[name='booktitle']").val(booktitle);
-    }); 
+    });
 
     /*行内工具栏的监听事件*/
     table.on("tool(datalist)", function(obj) {
@@ -146,12 +147,14 @@
             layer.confirm("确认拒绝此户籍注销申请吗?", function() {
                 $.ajax({
                     url: "HouseholdCancellation/refuse",
-                    data: {                         householdcancellationid: data.householdcancellationid,
+                    data: {
+                        householdcancellationid: data.householdcancellationid,
                         personname: data.person.personname,
                         householdid: data.person.householdid,
                         adminname: data.admin.adminname,
                         status: data.refuse,
-                        householdcancellationhouseholdid: data.householdcancellationhouseholdid, },
+                        householdcancellationhouseholdid: data.householdcancellationhouseholdid,
+                    },
                     success: function(result) {
                         console.log("Success response:", result);
                         obj.update({

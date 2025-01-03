@@ -7,17 +7,17 @@
     <link rel="stylesheet" href="static/layui/css/layui.css">
 </head>
 <body>
-<table class="layui-table" lay-data="{toolbar:'#toptools', url:'/HouseholdRegistration/list', page:true, id:'datalist'}" lay-filter="datalist">
+<table class="layui-table" lay-data="{toolbar:'#toptools', url:'/HouseholdCorrection/list', page:true, id:'datalist'}" lay-filter="datalist">
     <thead>
     <tr>
-        <th lay-data="{field:'householdregistrationid',}">申请编号</th>
+        <th lay-data="{field:'householdcorrectionid',}">申请编号</th>
         <th lay-data="{templet:function(d){return d.person.personname}}">姓名</th>
-        <th lay-data="{field:'householdregistrationhouseholdid',}">登记户籍</th>
+<!--        <th lay-data="{field:'householdcorrectionhouseholdid',}">所属户籍</th>-->
         <th lay-data="{templet:function(d){return d.admin.adminname}}">管理员姓名</th>
         <th lay-data="{templet:function(d){
-  if(d.householdregistrationstatus === '已同意'){
+  if(d.householdcorrectionstatus === '已同意'){
     return '<span style=\'color:green\'>已同意</span>';
-  } else if(d.householdregistrationstatus === '已拒绝'){
+  } else if(d.householdcorrectionstatus === '已拒绝'){
     return '<span style=\'color:gray\'>已拒绝</span>';
   } else {
     return '<span style=\'color:red\'>未批阅</span>';
@@ -31,15 +31,15 @@
 <!--新增窗口组件-->
 <div id="addWin" lay-filter="addWin" class="layui-form" style="display: none">
     <div class="layui-form-item">
-        <label class="layui-form-label">null</label>
+        <label class="layui-form-label">部门编号</label>
         <div class="layui-input-block">
-            <input type="text" name="code" placeholder="null" autocomplete="off" class="layui-input">
+            <input type="text" name="code" placeholder="请输入部门编号" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">null</label>
+        <label class="layui-form-label">部门名称</label>
         <div class="layui-input-block">
-            <input type="text" name="info" placeholder="null" autocomplete="off" class="layui-input">
+            <input type="text" name="info" placeholder="请输入部门名称" autocomplete="off" class="layui-input">
         </div>
     </div>
 </div>
@@ -85,23 +85,23 @@
     const layer=layui.layer;
     const form=layui.form;
 
-    $.ajax({
-        url:"login/islogin",
-        async:false,
-        success:function(result){
+          $.ajax({
+       url:"login/islogin",
+       async:false,
+       success:function(result){
             if(result==''){
                 top.location.href="login.html"
             }
-        }
-    });
+       }
+       });
 
     /*声明表格头部工具栏事件*/
     table.on("toolbar(datalist)",function(obj){
         var event=obj.event;
         if(event=='check'){
-            var name=$("[name='name']").val();
-            var booktitle=$("[name='booktitle']").val();
-            table.reload("datalist",{where:{name:name,booktitle:booktitle}});
+        var name=$("[name='name']").val();
+        var booktitle=$("[name='booktitle']").val();
+        table.reload("datalist",{where:{name:name,booktitle:booktitle}});
         }
         name=$("[name='name']").val(name);
         booktitle=$("[name='booktitle']").val(booktitle);
@@ -114,28 +114,24 @@
         if(event=='agree'){
             //点击编辑按钮执行的方法
             layer.confirm("确认同意此申请吗？",function(){
-                $.ajax({
-                    method:"post",
-                    url:"HouseholdRegistration/agree",
-                    headers: {
-                        "Content-Type": "application/json" // 设置请求头
-                    },
-                    data: JSON.stringify({
-                        householdregistrationid: data.householdregistrationid,
-                        householdregistrationuserid: data.person.personid,
-                        householdregistrationhouseholdid: data.householdregistrationhouseholdid,
-                        householdregistrationadminid: data.admin.adminid,
-                        householdregistrationstatus: "已同意"
-                    }),
-                    success:function(result){
-                        //刷新表格
-                        table.reload("datalist");
-                        //关闭窗口
-                        layer.closeAll();
-                        //提示用户
-                        layer.msg("已同意",{icon:1,time:1800});
-                    }
-                });
+            $.ajax({
+                        method:"post",
+                        url:"HouseholdCorrection/agree",
+                        data:{                         householdcorrectionid: data.householdcorrectionid,
+                            personname: data.person.personname,
+                            householdid: data.person.householdid,
+                            adminname: data.admin.adminname,
+                            status: data.refuse,
+                            householdcorrectionid: data.householdcorrectionid,},
+                        success:function(result){
+                            //刷新表格
+                            table.reload("datalist");
+                            //关闭窗口
+                            layer.closeAll();
+                            //提示用户
+                            layer.msg("已同意",{icon:1,time:1800});
+                        }
+                    });
             });
             //提交数据
 
@@ -146,19 +142,19 @@
             layer.confirm("确认要拒绝该申请吗?",function(){
                 //点击确认后执行的代码
                 $.ajax({
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json" // 设置请求头
+                    url:"HouseholdCorrection/refuse",
+                    data:{
+                        householdcorrectionid:data.householdcorrectionid,
+                        personname:data.person.personname,
+                        householdid:data.person.householdid,
+                        adminname:data.admin.adminname,
+                        status:data.refuse,
+                        householdcorrectionid:data.householdcorrectionid
                     },
-                    url:"HouseholdRegistration/refuse",
-                    data: JSON.stringify({
-                        householdregistrationid: data.householdregistrationid,
-                        householdregistrationuserid: data.person.personid,
-                        householdregistrationhouseholdid: data.householdregistrationhouseholdid,
-                        householdregistrationadminid: data.admin.adminid,
-                        householdregistrationstatus: "已拒绝"
-                    }),
                     success:function (){
+                        obj.update({
+                            refuse:'已拒绝'
+                        });
                         layer.closeAll();
                         table.reload("datalist");
                         layer.msg("已拒绝",{icon:1,time:1800});
@@ -166,22 +162,22 @@
                 });
             });
         }
-        // else if(event=='delete'){
-        //     //点击删除按钮执行的方法
-        //     //确认是否删除数据
-        //     layer.confirm("确认要删除该行数据吗?",function(){
-        //         //点击确认后执行的代码
-        //         $.ajax({
-        //             url:"person/delete",
-        //             data:{personid:data.personid},
-        //             success:function (){
-        //                 layer.closeAll();
-        //                 table.reload("datalist");
-        //                 layer.msg("删除成功",{icon:1,time:1800});
-        //             }
-        //         });
-        //     });
-        // }
+        else if(event=='delete'){
+            //点击删除按钮执行的方法
+            //确认是否删除数据
+            layer.confirm("确认要删除该行数据吗?",function(){
+                //点击确认后执行的代码
+                $.ajax({
+                    url:"person/delete",
+                    data:{personid:data.personid},
+                    success:function (){
+                        layer.closeAll();
+                        table.reload("datalist");
+                        layer.msg("删除成功",{icon:1,time:1800});
+                    }
+                });
+            });
+        }
     });
 </script>
 </body>

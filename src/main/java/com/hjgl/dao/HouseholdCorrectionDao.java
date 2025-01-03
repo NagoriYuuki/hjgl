@@ -31,7 +31,7 @@ public class HouseholdCorrectionDao {
     @OperationLog(description = "拒绝")
     public int refuse(HouseholdCorrection householdCorrection) {
         String sql = "update HouseholdCorrection set HouseholdCorrectionStatus = ? where HouseholdCorrectionID = ? ";
-        int res = JdbcUtil.update(sql,"refuse", householdCorrection.getHouseholdcorrectionid());
+        int res = JdbcUtil.update(sql,"已拒绝", householdCorrection.getHouseholdcorrectionid());
         return res;
     }
 
