@@ -5,26 +5,28 @@ import com.hjgl.dao.AdminDao;
 import com.hjgl.dao.HouseholdRegistrationDao;
 import com.hjgl.dao.PersonDao;
 import com.hjgl.dao.UserDao;
+import com.hjgl.util.JdbcUtil;
 import com.hjgl.util.Page;
 import com.hjgl.util.RestResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+
+@RestController
+@RequestMapping("HouseholdRegistration")
 public class HouseholdRegistrationController {
     @Autowired
     AdminDao adminDao;
     @Autowired
     UserDao userDao;
     @Autowired
-    Person person;
-
-    @Autowired
     PersonDao personDao;
-
     @Autowired
     HouseholdRegistrationDao hrD;
     @Autowired
@@ -36,9 +38,17 @@ public class HouseholdRegistrationController {
         if(obj instanceof Admin){
             Admin admin =(Admin) obj;
             int adminid=admin.getAdminid();
-            householdRegistration.setHouseholdRegistrationAdminID(adminid);
+            householdRegistration.setHouseholdregistrationadminid(adminid);
         }
-        return hrD.agree(householdRegistration,personDao);
+        String sql1="select * from person where personid = ? ";
+        ResultSet rs= JdbcUtil.query(sql1,householdRegistration.getHouseholdRegistrationPersonID());
+        List<Person> list=JdbcUtil.convertResultSetToList(rs,Person.class);
+        if(list.size()!=0) {
+            Person p = list.get(0);
+            p.setPersonhouseholdid(householdRegistration.getHouseholdregistrationhouseholdid());
+            personDao.edit(p);
+        }
+        return hrD.agree(householdRegistration);
     }
     @RequestMapping("refuse")
     public int refuse(HouseholdRegistration householdRegistration){
@@ -46,16 +56,21 @@ public class HouseholdRegistrationController {
     }
 
     @RequestMapping("list")
-    public RestResult getlist(User user , Admin admin, Page page) throws SQLException, IllegalAccessException, InstantiationException {
-        List<HouseholdCancellation> list=hrD.getRecord(user,admin,page);
-        for(HouseholdCancellation i:list){
-            int userid=i.getHouseholdcancellationUserid();
-            int adminid=i.getHouseholdcancellationadminid();
-            i.setUser(userDao.getUserByUserid(userid));
+    public RestResult getlist(Person person , Admin admin, Page page) throws SQLException, IllegalAccessException, InstantiationException {
+        List<HouseholdRegistration> list=hrD.getRecord(person,admin,page);
+        for(HouseholdRegistration i:list){
+            System.out.println(1);
+            int personid=i.getHouseholdregistrationuserid();
+            System.out.println(2);
+            int adminid=i.getHouseholdregistrationadminid();
+            System.out.println(3+" "+personid+" "+i.getHouseholdregistrationid());
+            i.setPerson(personDao.getPersonByPersonid(personid));
+            System.out.println(4);
             i.setAdmin(adminDao.getAdminByAdminid(adminid));
+            System.out.println(5);
         }
 
-        int cnt=hrD.getCount(user,admin);
+        int cnt=hrD.getCount(person,admin);
         RestResult result=new RestResult(cnt,list);
         return result;
     }

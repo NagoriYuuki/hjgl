@@ -15,7 +15,7 @@ import java.util.List;
 @Repository
 public class PersonDao {
     public Person getPersonByPersonid(int personid) throws SQLException, IllegalAccessException, InstantiationException {
-        String sql="select * from person where personid = ?";
+        String sql="select * from person where personid = ? ";
         ResultSet rs= JdbcUtil.query(sql,personid);
         List<Person> list=JdbcUtil.convertResultSetToList(rs,Person.class);
         Person person=list.get(0);
