@@ -73,7 +73,6 @@
     <button type="button" class="layui-btn layui-btn-xs layui-bg-orange"
             lay-event="agree">同意</button>
     {{#         }     }}
-        <button type="button" class="layui-btn layui-btn-xs layui-bg-red" lay-event="refuse">拒绝</button>
     <!--    <button type="button" class="layui-btn layui-btn-xs layui-bg-gray" lay-event="delete">删除</button>-->
 </script>
 
@@ -139,22 +138,10 @@
         }else if(event=='refuse'){
             //点击删除按钮执行的方法
             //确认是否删除数据
-            layer.confirm("确认要拒绝该申请吗?",function(){
                 //点击确认后执行的代码
                 $.ajax({
                     url:"HouseholdCorrection/refuse",
-                    data:{
-                        householdcorrectionid:data.householdcorrectionid,
-                        personname:data.person.personname,
-                        householdid:data.person.householdid,
-                        adminname:data.admin.adminname,
-                        status:data.refuse,
-                        householdcorrectionid:data.householdcorrectionid
-                    },
                     success:function (){
-                        obj.update({
-                            refuse:'已拒绝'
-                        });
                         layer.closeAll();
                         table.reload("datalist");
                         layer.msg("已拒绝",{icon:1,time:1800});

@@ -15,14 +15,14 @@ public class HouseholdRegistration
      * - HouseholdRegistrationPersonID: 外键，关联到人员表 (INT)
      */
 
-    private int householdregistrationid;
-    private Date householdregistrationtime;
-    private Date householdregistrationreturntime;
-    private String householdregistrationstatus;
-    private int householdregistrationhouseholdid;
-    private int householdregistrationuserid;
-    private int householdregistrationadminid;
-    private int householdregistrationpersonid;
+    private int HouseholdRegistrationID;
+    private Date HouseholdRegistrationTime;
+    private Date HouseholdRegistrationReturnTime;
+    private String HouseholdRegistrationStatus;
+    private int HouseholdRegistrationHouseholdID;
+    private int HouseholdRegistrationUserID;
+    private int HouseholdRegistrationAdminID;
+    private int HouseholdRegistrationPersonID;
 
 
     private Person person;
@@ -53,68 +53,68 @@ public class HouseholdRegistration
         this.admin = admin;
     }
 
-    public int getHouseholdregistrationpersonid() {
-        return householdregistrationpersonid;
+    public int getHouseholdRegistrationPersonID() {
+        return HouseholdRegistrationPersonID;
     }
 
-    public void setHouseholdregistrationpersonid(int householdregistrationpersonid) {
-        this.householdregistrationpersonid = householdregistrationpersonid;
+    public void setHouseholdRegistrationPersonID(int householdRegistrationPersonID) {
+        HouseholdRegistrationPersonID = householdRegistrationPersonID;
     }
 
-    public Date getHouseholdregistrationreturntime() {
-        return householdregistrationreturntime;
+    public Date getHouseholdRegistrationReturnTime() {
+        return HouseholdRegistrationReturnTime;
     }
 
-    public void setHouseholdregistrationreturntime(Date householdregistrationreturntime) {
-        this.householdregistrationreturntime = householdregistrationreturntime;
+    public void setHouseholdRegistrationReturnTime(Date householdRegistrationReturnTime) {
+        HouseholdRegistrationReturnTime = householdRegistrationReturnTime;
     }
 
-    public int getHouseholdregistrationid() {
-        return householdregistrationid;
+    public int getHouseholdRegistrationID() {
+        return HouseholdRegistrationID;
     }
 
-    public void setHouseholdregistrationid(int householdregistrationid) {
-        this.householdregistrationid = householdregistrationid;
+    public void setHouseholdRegistrationID(int householdRegistrationID) {
+        HouseholdRegistrationID = householdRegistrationID;
     }
 
-    public Date getHouseholdregistrationtime() {
-        return householdregistrationtime;
+    public Date getHouseholdRegistrationTime() {
+        return HouseholdRegistrationTime;
     }
 
-    public void setHouseholdregistrationtime(Date householdregistrationtime) {
-        this.householdregistrationtime = householdregistrationtime;
+    public void setHouseholdRegistrationTime(Date householdRegistrationTime) {
+        HouseholdRegistrationTime = householdRegistrationTime;
     }
 
-    public String getHouseholdregistrationstatus() {
-        return householdregistrationstatus;
+    public String getHouseholdRegistrationStatus() {
+        return HouseholdRegistrationStatus;
     }
 
-    public void setHouseholdregistrationstatus(String householdregistrationstatus) {
-        this.householdregistrationstatus = householdregistrationstatus;
+    public void setHouseholdRegistrationStatus(String householdRegistrationStatus) {
+        HouseholdRegistrationStatus = householdRegistrationStatus;
     }
 
-    public int getHouseholdregistrationhouseholdid() {
-        return householdregistrationhouseholdid;
+    public int getHouseholdRegistrationHouseholdID() {
+        return HouseholdRegistrationHouseholdID;
     }
 
-    public void setHouseholdregistrationhouseholdid(int householdregistrationhouseholdid) {
-        this.householdregistrationhouseholdid = householdregistrationhouseholdid;
+    public void setHouseholdRegistrationHouseholdID(int householdRegistrationHouseholdID) {
+        HouseholdRegistrationHouseholdID = householdRegistrationHouseholdID;
     }
 
-    public int getHouseholdregistrationuserid() {
-        return householdregistrationuserid;
+    public int getHouseholdRegistrationUserID() {
+        return HouseholdRegistrationUserID;
     }
 
-    public void setHouseholdregistrationuserid(int householdregistrationuserid) {
-        this.householdregistrationuserid = householdregistrationuserid;
+    public void setHouseholdRegistrationUserID(int householdRegistrationUserID) {
+        HouseholdRegistrationUserID = householdRegistrationUserID;
     }
 
-    public int getHouseholdregistrationadminid() {
-        return householdregistrationadminid;
+    public int getHouseholdRegistrationAdminID() {
+        return HouseholdRegistrationAdminID;
     }
 
-    public void setHouseholdregistrationadminid(int householdregistrationadminid) {
-        this.householdregistrationadminid = householdregistrationadminid;
+    public void setHouseholdRegistrationAdminID(int householdRegistrationAdminID) {
+        HouseholdRegistrationAdminID = householdRegistrationAdminID;
     }
 
 }
