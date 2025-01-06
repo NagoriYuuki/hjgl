@@ -158,7 +158,7 @@
       }else if(event=='delete'){
           //点击删除按钮执行的方法
           //确认是否删除数据
-          layer.confirm("确认要删除该行数据吗?",function(){
+          layer.confirm("确认要拒绝此申请吗?",function(){
               //点击确认后执行的代码
               $.ajax({
                   url:"admin/delete",
@@ -166,7 +166,7 @@
                   success:function (){
                       layer.closeAll();
                       table.reload("datalist");
-                      layer.msg("删除成功",{icon:1,time:1800});
+                      layer.msg("拒绝成功",{icon:1,time:1800});
                   }
               });
           });

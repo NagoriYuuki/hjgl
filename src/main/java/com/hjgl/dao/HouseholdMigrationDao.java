@@ -15,7 +15,7 @@ import java.util.List;
 public class HouseholdMigrationDao {
     @OperationLog(description = "已同意")
     public int agree(HouseholdMigration householdMigration) throws SQLException, IllegalAccessException, InstantiationException {
-        System.out.println("migration: "+householdMigration);
+//        System.out.println("migration: "+householdMigration);
         String sql = "update HouseholdMigration set HouseholdMigrationStatus = ? where HouseholdMigrationID = ?";
         int res = JdbcUtil.update(sql, "已同意", householdMigration.getHouseholdmigrationid());
         return res;
@@ -33,7 +33,7 @@ public class HouseholdMigrationDao {
     public List getRecord(Person person, Admin admin, Page page) throws SQLException, IllegalAccessException, InstantiationException {
         String sql="select * from HouseholdMigration ";
         List params=new ArrayList();
-        System.out.println(sql);
+//        System.out.println(sql);
         ResultSet rs = JdbcUtil.query(sql, params.toArray());
         List<HouseholdMigration> list = JdbcUtil.convertResultSetToList(rs, HouseholdMigration.class);
         JdbcUtil.close(rs);

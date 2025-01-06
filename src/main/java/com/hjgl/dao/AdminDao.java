@@ -17,8 +17,13 @@ public class AdminDao {
         String sql = "select * from admin where adminid=? ";
         ResultSet rs = JdbcUtil.query(sql, adminid);
         List<Admin> list = JdbcUtil.convertResultSetToList(rs, Admin.class);
-        Admin res = list.get(0);
+        if(list.size()!=0) {
+            Admin res = list.get(0);
+            JdbcUtil.close(rs);
+            return res;
+        }
         JdbcUtil.close(rs);
+        Admin res=null;
         return res;
     }
 
@@ -32,7 +37,6 @@ public class AdminDao {
 
     public List<Admin> getAdminByAccount(String adminaccount) throws SQLException, IllegalAccessException, InstantiationException {
         String sql = "select * from admin where adminaccount = ? ";
-//        System.out.println(adminaccount);
         ResultSet rs = JdbcUtil.query(sql, adminaccount);
         List<Admin> list = JdbcUtil.convertResultSetToList(rs, Admin.class);
         JdbcUtil.close(rs);

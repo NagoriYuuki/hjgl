@@ -28,8 +28,8 @@ public class HouseholdCancellationDao {
     HouseholdDao householdDao;
     @OperationLog(description = "同意")
     public int agree(HouseholdCancellation householdCancellation) throws SQLException, IllegalAccessException, InstantiationException {
-        System.out.println("houseid:-----> "+ householdCancellation.getHouseholdcancellationhouseholdid());
-        System.out.println("adminid:-----> "+ householdCancellation.getHouseholdcancellationadminid());
+//        System.out.println("houseid:-----> "+ householdCancellation.getHouseholdcancellationhouseholdid());
+//        System.out.println("adminid:-----> "+ householdCancellation.getHouseholdcancellationadminid());
         // 修正 SQL 语法，使用逗号分隔 SET 子句
         String sql = "UPDATE HouseholdCancellation SET  HouseholdCancellationStatus = ? WHERE HouseholdCancellationID = ?";
         int res = JdbcUtil.update(sql, "已同意", householdCancellation.getHouseholdcancellationid());
@@ -59,9 +59,9 @@ public class HouseholdCancellationDao {
 
     public List getRecord(User user, Admin admin, Page page) throws SQLException, IllegalAccessException, InstantiationException {
         String sql="select * from HouseholdCancellation ";
-        System.out.println(user);
+//        System.out.println(user);
         List params=new ArrayList();
-        System.out.println(sql);
+//        System.out.println(sql);
         ResultSet rs = JdbcUtil.query(sql, params.toArray());
 
         List<HouseholdCancellation> list = JdbcUtil.convertResultSetToList(rs, HouseholdCancellation.class);
@@ -87,14 +87,9 @@ public class HouseholdCancellationDao {
     //删除
 
     public int delete(HouseholdCancellation householdCancellation){
-        String sql="delete from householdcancellation where HouseholdCancellationID=?";
-
+        String sql="delete from householdcancellation where HouseholdCancellationID=? ";
         int res=JdbcUtil.update(sql,householdCancellation.getHouseholdcancellationid());
-
         return res;
     }
-
-
-
 
 }

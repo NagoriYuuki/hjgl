@@ -20,7 +20,6 @@ public class AdminController {
 
     @RequestMapping("list")
     public RestResult getList(Page page, String checktext) throws SQLException, IllegalAccessException, InstantiationException, SQLException {
-//        System.out.println("1111111111111111111111");
         List list=adminDao.getList(page,checktext);
         int count= adminDao.getCount(checktext);
         RestResult result=new RestResult(count,list);
@@ -29,10 +28,6 @@ public class AdminController {
 
     @RequestMapping("add")
     public int add(Admin admin) {
-//        System.out.println("1111111111111111111111");
-        System.out.println(admin.getAdminaccount());
-        System.out.println(admin.getAdminname());
-        System.out.println(admin.getAdminpassword());
         int result = adminDao.add(admin);
         return result;
     }

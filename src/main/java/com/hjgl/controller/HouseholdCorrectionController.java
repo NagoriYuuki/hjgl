@@ -37,7 +37,6 @@ public class HouseholdCorrectionController {
             int adminid=admin.getAdminid();
             householdCorrection.setHouseholdcorrectionadminid(adminid);
         }
-        System.out.println(1111);
         String sql1= "select * from person where personid = ? ";
         ResultSet rs= JdbcUtil.query(sql1,householdCorrection.getHouseholdcorrectionpersonid());
         List<Person> list=JdbcUtil.convertResultSetToList(rs,Person.class);
@@ -56,7 +55,7 @@ public class HouseholdCorrectionController {
     @RequestMapping("list")
     public RestResult getlist(User user , Admin admin, Page page) throws SQLException, IllegalAccessException, InstantiationException {
         List<HouseholdCorrection> list=hcD.getRecord(user,admin,page);
-        System.out.println("List");
+//        System.out.println("List");
         for(HouseholdCorrection i:list){
             int userid=i.getHouseholdcorrectionpersonid();//用户id
             int adminid=i.getHouseholdcorrectionadminid();//管理员id
@@ -64,9 +63,8 @@ public class HouseholdCorrectionController {
             i.setAdmin(adminDao.getAdminByAdminid(adminid));
             //查询用户管理员信息
         }
-        System.out.println(1234243);
         int cnt=hcD.getCount(user,admin);
-        System.out.println(cnt+" "+list.size());
+//        System.out.println(cnt+" "+list.size());
         RestResult result=new RestResult(cnt,list);
         return result;
     }

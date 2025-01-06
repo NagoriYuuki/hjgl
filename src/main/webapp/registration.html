@@ -69,11 +69,12 @@
 
 <!--表格行内工具栏-->
 <script type="text/html" id="linetools">
-    {{#   if(!d.agree){   }}
-    <button type="button" class="layui-btn layui-btn-xs layui-bg-orange"
-            lay-event="agree">同意</button>
-    {{#         }     }}
-        <button type="button" class="layui-btn layui-btn-xs layui-bg-red" lay-event="refuse">拒绝</button>
+    {{# if(d.householdregistrationstatus === '未批阅') { }}
+    <button class="layui-btn layui-btn-xs layui-bg-blue" lay-event="agree">同意</button>
+    <button class="layui-btn layui-btn-xs layui-bg-red" lay-event="refuse">拒绝</button>
+    {{# } else { }}
+    <span style="color:gray;">已处理该申请</span>
+    {{# } }}
     <!--    <button type="button" class="layui-btn layui-btn-xs layui-bg-gray" lay-event="delete">删除</button>-->
 </script>
 

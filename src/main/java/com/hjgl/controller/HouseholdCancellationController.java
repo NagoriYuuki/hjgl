@@ -29,19 +29,19 @@ public class HouseholdCancellationController {
 
     @RequestMapping("agree")
     public int agree(HouseholdCancellation householdCancellation, HttpSession session) throws SQLException, IllegalAccessException, InstantiationException {
-        System.out.println("controller:-------->"+householdCancellation.getHouseholdcancellationhouseholdid());
-        System.out.println(householdCancellation.getHouseholdcancellationUserid());
+//        System.out.println("controller:-------->"+householdCancellation.getHouseholdcancellationhouseholdid());
+//        System.out.println(householdCancellation.getHouseholdcancellationUserid());
         Object obj=session.getAttribute("loginadmin");
         if(obj instanceof Admin){
             Admin admin=(Admin)obj;
             int adminid=admin.getAdminid();
             householdCancellation.setHouseholdcancellationadminid(adminid);
         }
-        System.out.println(householdCancellation.getHouseholdcancellationhouseholdid());
+//        System.out.println(householdCancellation.getHouseholdcancellationhouseholdid());
         String sql1= "select * from Household where Householdid = ?";
         ResultSet rs = JdbcUtil.query(sql1,householdCancellation.getHouseholdcancellationhouseholdid());
         List<Household> list= JdbcUtil.convertResultSetToList(rs, Household.class);
-        System.out.println(list.size());
+//        System.out.println(list.size());
         if(list.size()!=0) {
             Household household = list.get(0);
             householdDao.delete(household);

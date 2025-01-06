@@ -13,7 +13,7 @@
         <th lay-data="{field:'householdid', sort: true}">户籍编号</th>
         <th lay-data="{field:'householdername', sort: true}">户主姓名</th>
         <th lay-data="{field:'householdaddress', sort: true}">户籍地址</th>
-<!--        <th lay-data="{field:'householdpopulation', sort: true}">户籍人数</th>-->
+        <th lay-data="{field:'householdpopulation', sort: true}">户籍人数</th>
         <th lay-data="{toolbar:'#linetools'}">操作</th>
     </tr>
     </thead>
@@ -21,6 +21,7 @@
 
 <!--新增窗口组件-->
 <div id="addWin" lay-filter="addWin" class="layui-form" style="display: none">
+    <!--    <input type="hidden" name="householdid" id="householdid">-->
     <div class="layui-form-item">
         <label class="layui-form-label">户主姓名</label>
         <div class="layui-input-block">
@@ -29,6 +30,7 @@
             </select>
         </div>
     </div>
+
     <div class="layui-form-item">
         <label class="layui-form-label">户籍地址</label>
         <div class="layui-input-block">
@@ -39,11 +41,21 @@
 
 <!--编辑窗口组件-->
 <div id="editWin" lay-filter="editWin" class="layui-form" style="display: none">
-    <input type="hidden" name="categoryid">
+    <input type="hidden" name="householdid">
+    <!-- 将“户主姓名”改为下拉选择框，与新增保持一致 -->
     <div class="layui-form-item">
-        <label class="layui-form-label">分类名称</label>
+        <label class="layui-form-label">户主姓名</label>
         <div class="layui-input-block">
-            <input type="text" name="categoryname" placeholder="请输入分类名称" autocomplete="off" class="layui-input">
+            <select id="editHouseholdername" name="householdername" lay-filter="editHouseholdername" class="layui-input">
+                <!-- 动态加载选项 -->
+            </select>
+        </div>
+    </div>
+    <!-- 增加对户籍地址的填写，用于编辑 -->
+    <div class="layui-form-item">
+        <label class="layui-form-label">户籍地址</label>
+        <div class="layui-input-block">
+            <input type="text" name="householdaddress" placeholder="请输入户籍地址" autocomplete="off" class="layui-input">
         </div>
     </div>
 </div>
@@ -84,28 +96,15 @@
     const layer = layui.layer;
     const form = layui.form;
 
-    // 动态加载户主姓名
-    $(document).ready(function() {
-        $.ajax({
-            url: "person/list", // 后端接口，获取户主姓名列表
-            method: "GET",
-            success: function(response) {
-                if (response.data && response.data.length > 0) {
-                    const dropdown = $('#householdername');
-                    dropdown.empty(); // 清空现有选项
-                    response.data.forEach(function(person) {
-                        dropdown.append(new Option(person.personname, person.personid));
-                    });
-                    // 重新渲染下拉框
-                    layui.form.render('select');
-                } else {
-                    layer.msg("无可用的户主信息", {icon: 0, time: 2000});
-                }
-            },
-            error: function() {
-                layer.msg("加载户主姓名失败", {icon: 2, time: 2000});
+    // 检查登录状态
+    $.ajax({
+        url: "login/islogin",
+        async: false,
+        success: function (result) {
+            if (result === '') {
+                top.location.href = "login.html"
             }
-        });
+        }
     });
 
     // 表格头部工具栏事件
@@ -115,14 +114,14 @@
             layer.open({
                 type: 1,
                 title: "新增户籍",
-                area: ['400px', '560px'],
+                area: ['400px', '660px'],
                 content: $("#addWin"),
                 btn: ["保存"],
                 btn1: function () {
                     const formdata = form.val("addWin");
                     $.ajax({
                         method: 'post',
-                        url: 'category/add',
+                        url: 'household/add',
                         data: formdata,
                         success: function () {
                             layer.closeAll();
@@ -134,6 +133,50 @@
             });
         }
     });
+    // 在页面加载时动态获取户主姓名
+    $(document).ready(function() {
+        $.ajax({
+            url: "person/list",
+            method: "GET",
+            success: function(response) {
+                // 假设后端返回 { count: number, data: [...] }
+                if (response.data && response.data.length > 0) {
+                    const dropdown = $('#householdername');
+                    dropdown.empty(); // 清空选项
+                    response.data.forEach(function(person) {
+                        // 第一个参数是下拉显示的文本(personname)，第二个参数是提交的值(personid)
+                        dropdown.append(new Option(person.personname, person.personname));
+                    });
+                    // 使用layui.form.render('select')重新渲染下拉
+                    layui.form.render('select');
+                } else {
+                    layer.msg("无可用的户主信息", {icon: 0, time: 2000});
+                }
+            },
+            error: function() {
+                layer.msg("加载户主信息失败", {icon: 2, time: 2000});
+            }
+        });
+    });
+    // 添加户主选择事件监听器（新逻辑）
+    form.on('select(householdername)', function (data) {
+        const personid = data.value; // 获取选中户主的 ID
+        const householdid = form.val("addWin").householdid; // 当前户籍 ID
+
+        // 发送请求更新户主信息
+        $.ajax({
+            url: "/household/setHouseholder",
+            method: "POST",
+            data: { householdid, personid },
+            success: function (response) {
+                layer.msg("户主设置成功！", { icon: 1, time: 1500 });
+                // 其他操作：如刷新表格
+            },
+            // error: function () {
+            //     layer.msg("设置户主失败，请稍后再试", { icon: 2, time: 1500 });
+            // }
+        });
+    });
 
     // 行内工具栏事件
     table.on("tool(datalist)", function (obj) {
@@ -141,31 +184,59 @@
         const data = obj.data;
 
         if (event === 'edit') {
-            form.val("editWin", data);
-            layer.open({
-                type: 1,
-                title: '编辑分类',
-                area: ['300px', '260px'],
-                content: $("#editWin"),
-                btn: ["保存"],
-                btn1: function () {
-                    const formdata = form.val("editWin");
-                    $.ajax({
-                        method: "post",
-                        url: "category/edit",
-                        data: formdata,
-                        success: function () {
-                            table.reload("datalist");
-                            layer.closeAll();
-                            layer.msg("保存成功", { icon: 1, time: 1800 });
-                        }
-                    });
+            // 先清空下拉框
+            $("#editHouseholdername").empty();
+            // 异步获取所有人员列表来填充下拉框
+            $.ajax({
+                url: "person/list",
+                method: "GET",
+                success: function (response) {
+                    if (response.data && response.data.length > 0) {
+                        const dropdown = $('#editHouseholdername');
+                        response.data.forEach(function(person) {
+                            dropdown.append(new Option(person.personname, person.personname));
+                        });
+                        // 渲染下拉
+                        layui.form.render('select');
+                        // 为编辑窗口表单赋初始值
+                        // data.householdername 中若保存的是 personid, 则设置为 dropdown 的 value
+                        form.val("editWin", {
+                            householdid: data.householdid,
+                            householdername: data.householdername, // 若后端实际存的为 ID，请保持一致
+                            householdaddress: data.householdaddress
+                        });
+                        layer.open({
+                            type: 1,
+                            title: '编辑户籍',
+                            area: ['400px', '300px'],
+                            content: $("#editWin"),
+                            btn: ["保存"],
+                            btn1: function () {
+                                const formdata = form.val("editWin");
+                                $.ajax({
+                                    method: "post",
+                                    url: "household/edit",
+                                    data: formdata,
+                                    success: function () {
+                                        table.reload("datalist");
+                                        layer.closeAll();
+                                        layer.msg("保存成功", { icon: 1, time: 1800 });
+                                    }
+                                });
+                            }
+                        });
+                    } else {
+                        layer.msg("无可用的户主信息", {icon: 0, time: 2000});
+                    }
+                },
+                error: function() {
+                    layer.msg("加载户主名单失败", {icon: 2, time: 2000});
                 }
             });
         } else if (event === 'delete') {
             layer.confirm("确认要删除该行数据吗?", function () {
                 $.ajax({
-                    url: "category/delete",
+                    url: "household/delete",
                     data: data,
                     success: function () {
                         layer.closeAll();
@@ -184,8 +255,7 @@
                         tbody.append(`<tr>
                             <td>${person.id}</td>
                             <td>${person.name}</td>
-                            <td>${person.gender}</td>
-                            <td>${person.age}</td>
+
                         </tr>`);
                     });
                     layer.open({

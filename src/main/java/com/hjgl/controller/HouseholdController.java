@@ -52,8 +52,8 @@ public class HouseholdController {
 
     @PostMapping("setHouseholder")
     public String setHouseholder(@RequestParam(required = false) Integer householdid, @RequestParam int personid) {
-        System.out.println("sethouseholder");
-        System.out.println("householdid: " + householdid);
+//        System.out.println("sethouseholder");
+//        System.out.println("householdid: " + householdid);
 
         try {
             // 获取人员信息
@@ -68,7 +68,9 @@ public class HouseholdController {
                 person.setPersonhouseholdid(householdid);
             }
 
-            System.out.println("Updated householdid: " + householdid);
+//            System.out.println("Updated householdid: " + householdid);
+
+
 
             // 更新 Person 表
             personDao.edit(person);

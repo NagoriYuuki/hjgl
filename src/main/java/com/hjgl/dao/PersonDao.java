@@ -18,9 +18,13 @@ public class PersonDao {
         String sql="select * from person where personid = ? ";
         ResultSet rs= JdbcUtil.query(sql,personid);
         List<Person> list=JdbcUtil.convertResultSetToList(rs,Person.class);
-        Person person=list.get(0);
+        if(list.size()!=0) {
+            Person person = list.get(0);
+            JdbcUtil.close(rs);
+            return person;
+        }
         JdbcUtil.close(rs);
-        return person;
+        return null;
     }
 
     public List<Person> getHouselist(Household h, Page page) throws SQLException, IllegalAccessException, InstantiationException {
@@ -81,7 +85,7 @@ public class PersonDao {
             list.add(page.getStart());
             list.add(page.getLimit());
         }
-        System.out.println(sql);
+//        System.out.println(sql);
         ResultSet rs=JdbcUtil.query(sql,list.toArray());
         List<Person> per= JdbcUtil.convertResultSetToList(rs,Person.class);
         JdbcUtil.close(rs);
@@ -90,7 +94,6 @@ public class PersonDao {
     //查询
     public int getCountname(String checktexxt) throws SQLException {
         String sql="select count(*) from Person where isdelete = 0";
-        System.out.println(checktexxt+"  -=======================");
         if(checktexxt!=null){
             sql=sql+" and personname like ?";
             String find="%"+checktexxt+"%";
@@ -101,7 +104,7 @@ public class PersonDao {
                 cnt=rs.getInt(1);
 
             }
-            System.out.println("getccountname: "+cnt);
+//            System.out.println("getccountname: "+cnt);
             return  cnt;
         }
         ResultSet rs=JdbcUtil.query(sql);
@@ -164,8 +167,8 @@ public class PersonDao {
     //增加
 
     public int add(Person person) {
-        System.out.println("householdid: " + person.getPersonhouseholdid());
-        System.out.println(person.getPersongender());
+//        System.out.println("householdid: " + person.getPersonhouseholdid());
+//        System.out.println(person.getPersongender());
         String sql = "INSERT INTO person (personname, persongender, personbirthday, personidcardnumber, personhouseholdid) VALUES(?,?,?,?,?)";
         int res = JdbcUtil.update(sql, person.getPersonname(), person.getPersongender(), person.getPersonbirthday(), person.getPersonidcardnumber(), person.getPersonhouseholdid());
         return res;
@@ -174,7 +177,6 @@ public class PersonDao {
     //删除
 
     public int delete(Person person){
-        System.out.println("delete: " + person.getPersonid());
 //        System.out.println(person.getPersonid());
         String sql="update person set isdelete=1 where personid =? ";
         int res=JdbcUtil.update(sql,person.getPersonid());
@@ -184,9 +186,6 @@ public class PersonDao {
     //修改
 
     public int edit(Person person) {
-        System.out.println(person.getPersonname());
-        System.out.println("householdid: " + person.getPersonhouseholdid());
-        System.out.println("personid: " + person.getPersonid());
         String sql = "update person set personname=?, persongender=?, personbirthday=?, personidcardnumber=?, personhouseholdid=? where personid = ?";
         int res = JdbcUtil.update(sql, person.getPersonname(), person.getPersongender(), person.getPersonbirthday(), person.getPersonidcardnumber(), person.getPersonhouseholdid(), person.getPersonid());
         return res;

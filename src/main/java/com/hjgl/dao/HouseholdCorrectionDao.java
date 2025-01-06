@@ -38,9 +38,9 @@ public class HouseholdCorrectionDao {
 
     public List getRecord(User user, Admin admin, Page page) throws SQLException, IllegalAccessException, InstantiationException {
         String sql="select * from HouseholdCorrection ";
-        System.out.println(user);
+//        System.out.println(user);
         List params=new ArrayList();
-        System.out.println(sql);
+//        System.out.println(sql);
         ResultSet rs = JdbcUtil.query(sql, params.toArray());
 
         List<HouseholdCorrection> list = JdbcUtil.convertResultSetToList(rs, HouseholdCorrection.class);

@@ -28,7 +28,7 @@ public class PersonController {
     public RestResult getlist(Page page, String checktext) throws SQLException, IllegalAccessException, InstantiationException {
         List list = personDao.getlistname(page, checktext);
         int count = personDao.getCountname(checktext);
-        System.out.println("count: " + count);
+//        System.out.println("count: " + count);
         if (count == 0) {
             list = new ArrayList(); // 或者返回 Collections.emptyList()
         }
@@ -36,29 +36,27 @@ public class PersonController {
         return result;
     }
 
-    //查询户籍
-//    @RequestMapping("list")
-//    public RestResult getlisthouse(Person person,Page page) throws SQLException, IllegalAccessException, InstantiationException {
-//        Household h=householdDao.getPersonByHousehold(person,page);
-//        List<Person> list=personDao.getHouselist(h,page);
-//        int count = personDao.getHouseCount(h,page);
-//        RestResult result=new RestResult(count,list);
-//        return  result;
-//
-//    }
-//
-//    //    @RequestMapping("list")
-//    public RestResult getlistnumber(Page page, String checktext) throws SQLException, IllegalAccessException, InstantiationException {
-//        List list = personDao.getlistnumber(page, checktext);
-//        int count = personDao.getCountnumber(checktext);
-//        RestResult result = new RestResult(count, list);
-//        return result;
-//    }
+//    查询户籍
+    @RequestMapping("listhouse")
+    public RestResult getlisthouse(Person person,Page page) throws SQLException, IllegalAccessException, InstantiationException {
+        Household h=householdDao.getPersonByHousehold(person,page);
+        List<Person> list=personDao.getHouselist(h,page);
+        int count = personDao.getHouseCount(h,page);
+        RestResult result=new RestResult(count,list);
+        return  result;
+
+    }
+
+    @RequestMapping("listnumber")
+    public RestResult getlistnumber(Page page, String checktext) throws SQLException, IllegalAccessException, InstantiationException {
+        List list = personDao.getlistnumber(page, checktext);
+        int count = personDao.getCountnumber(checktext);
+        RestResult result = new RestResult(count, list);
+        return result;
+    }
 
     @RequestMapping("add")
     public int add(Person person) {
-//        System.out.println("checkthere");
-//        System.out.println(person.getPersonname());
         int res = personDao.add(person);
         return res;
     }

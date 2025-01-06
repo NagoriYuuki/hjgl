@@ -1,79 +1,220 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>登录页面</title>
+    <title>管理员登录</title>
     <link rel="stylesheet" href="static/layui/css/layui.css">
-</head>
-<body class="layui-layout-body" style="background-image:url(static/img/img.png);background-repeat:no-repeat;background-size:cover;">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #6e7e8d, #4e5b6d), url('static/img/img.png') no-repeat center center fixed;
+            background-size: cover;
+            background-image: url('static/img/img.png');
+        }
 
-<div class="layui-container" style="" >
-    <div class="layui-card" style="width: 500px; margin: 100px auto;">
-        <div class="layui-card-body">
-            <form class="layui-form" action="">
-                <div class="layui-form-item">
-                    <label class="layui-form-label">用户名</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="adminaccount" required lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">密码</label>
-                    <div class="layui-input-block">
-                        <input type="password" name="adminpassword" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <div class="layui-input-block">
-                        <button class="layui-btn" type="button" lay-submit lay-filter="login">登录</button>
-                    </div>
-                </div>
-            </form>
-        </div>
+
+        /* 左侧栏 */
+        .left-bar {
+            flex: 1;
+            /*background: #1E9FFF;*/
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: white;
+            font-size: 36px;
+            font-weight: bold;
+            position: relative;
+        }
+
+        /* 打字机效果 */
+        .typing-effect {
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 4px solid #fff;
+            animation: typing 1s steps(6) 0.5s forwards, blink 0.8s step-end infinite;
+        }
+
+        @keyframes typing {
+            to {
+                width: var(--typing-width); /* 使用动态计算宽度 */
+            }
+        }
+
+        @keyframes blink {
+            50% {
+                border-color: transparent;
+            }
+        }
+
+
+        /* 右侧栏 */
+        .login-container {
+            width: 400px;
+
+            padding: 40px;
+            padding-top: 200px;
+            background-color: rgb(255, 255, 255,0.8); /* 设置背景透明度 */
+            backdrop-filter: blur(10px); /* 增加模糊效果 */
+            /*border-radius: 10px;*/
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+
+        }
+
+
+        .login-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .layui-form-label {
+            font-weight: 600;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .layui-input {
+            height: 40px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+
+        .layui-input:focus {
+            border-color: #1E9FFF;
+            box-shadow: 0 0 5px rgba(30, 159, 255, 0.5);
+        }
+
+        .layui-btn {
+            background-color: #359688;
+            color: white;
+            font-size: 16px;
+            width: 100%;
+            height: 40px;
+            line-height: 40px;
+            padding: 0;
+            border-radius: 5px;
+            border: none;
+            box-sizing: border-box;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .layui-btn:hover {
+            background-color: #0099FF;
+            box-shadow: 0 4px 8px rgba(0, 153, 255, 0.3);
+        }
+
+        .layui-btn:active {
+            background-color: #007acc;
+        }
+
+        .layui-card-body {
+            padding: 0;
+        }
+
+        .layui-form-item {
+            margin-bottom: 20px;
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- 左侧栏 -->
+<div class="left-bar">
+    <div class="typing-effect">户籍管理系统</div>
+</div>
+
+<!-- 右侧栏 -->
+<div class="login-container">
+    <div class="login-title">
+        管理员登录
     </div>
+    <form class="layui-form" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户名</label>
+            <div class="layui-input-block">
+                <input type="text" name="adminaccount" required lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="adminpassword" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" type="button" lay-submit lay-filter="login">登录</button>
+            </div>
+        </div>
+    </form>
 </div>
 
 <script src="static/layui/layui.all.js"></script>
 <script>
-    var $=layui.$;
+    var $ = layui.$;
     var form = layui.form;
-    var layer=layui.layer;
-<!--如果已经登录  不能访问此页面-->
+    var layer = layui.layer;
 
+    <!-- 如果已经登录 不能访问此页面 -->
     $.ajax({
-        url:'login/islogin',
-        async:false,
-        success:function(result){
+        url: 'login/islogin',
+        async: false,
+        success: function(result){
             if(result){
-<!--            登录过了-->
-               location.href="index.html";
+                <!-- 登录过了 -->
+                location.href = "index.html";
             }
         }
     });
+
     // 提交表单的监听
-    form.on('submit(login)', function(data){
-      // 在这里处理登录逻辑
-      console.log(data.field); // 获取表单提交的字段
-      // 例如：提交到服务器处理
-       $.ajax({
-         url: '/login/doLogin',
-         data: data.field,
-         type: 'post',
-         success: function(res){
-           if(res=='success'){
-            // 登录成功
-            location.href="index.html"
-           } else {
-            // 登录失败
-            layer.msg("登录失败",{icon:2});
-           }
-         }
-       });
+    form.on('submit(login)', function(data) {
+        // 在这里处理登录逻辑
+        console.log(data.field); // 获取表单提交的字段
+        // 例如：提交到服务器处理
+        $.ajax({
+            url: '/login/doLogin',
+            data: data.field,
+            type: 'post',
+            success: function(res) {
+                if(res == 'success') {
+                    // 登录成功
+                    location.href = "index.html";
+                } else {
+                    // 登录失败
+                    layer.msg("登录失败", {icon: 2});
+                }
+            }
+        });
 
-      return false;
+        return false;
     });
+    document.addEventListener("DOMContentLoaded", function () {
+        const typingElement = document.querySelector(".typing-effect");
 
+        // 动态获取内容宽度
+        const textWidth = typingElement.scrollWidth + "px";
+
+        // 将宽度设置为 CSS 变量
+        typingElement.style.setProperty("--typing-width", textWidth);
+    });
 
 </script>
 

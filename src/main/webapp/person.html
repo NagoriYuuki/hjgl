@@ -17,10 +17,6 @@
         <th lay-data="{field:'personbirthday',sort: true}">出生日期</th>
         <th lay-data="{field:'personidcardnumber'}">身份证号</th>
         <th lay-data="{field:'personhouseholdid'}">户籍编号</th>
-<!--        <th lay-data="{field:'personhouseholdid', sort: true}">出生日期</th>-->
-<!--        <th lay-data="{field:'isdelete', sort: true}">身份证号</th>-->
-<!--        <th lay-data="{field:'price', sort: true}">价格</th>-->
-<!--        <th lay-data="{templet:function(d){return d.category.categoryname}}">分类</th>-->
         <th lay-data="{toolbar:'#linetools'}">操作</th>
     </tr>
     </thead>
@@ -32,7 +28,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">书名</label>
         <div class="layui-input-block">
-            <input type="text" name="booktitle" placeholder="请输入图书名称" autocomplete="off" class="layui-input">
+            <input type="text" name="booktitle" placeholder="请输入人员名称" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
@@ -179,15 +175,14 @@
             }
        }
        });
-<!--   查询数据库中分类的信息  将分类 信息转换成  下拉框选项   设置到2个下拉框中-->
-<!--    1. 查询数据库中分类的信息-->
+
     $.ajax({
     url:'person/list',
     async:false,
     success:function(result){
         var data=result.data;
         for(var index in data){
-<!--        2.将分类 信息转换成  下拉框选项 .-->
+
             $("select[name='categoryid']").append(
             "<option value='"+data[index].categoryid+"'>"+data[index].categoryname+"</option>"
             );
@@ -224,7 +219,7 @@
             //打开一个对话框(输入内容)
             layer.open({
                 type:1,
-                title:"新增图书",
+                title:"新增人口信息",
                 area:['470px','500px'],
                 content:$("#addWin"),
                 btn:["保存"],

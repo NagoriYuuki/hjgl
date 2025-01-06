@@ -94,12 +94,10 @@ public class HouseholdDao {
      */
     //增加
     public int add(Household hou) {
-        System.out.println("check:");
-        String sql = "INSERT INTO Household (HouseholdAddress, HouseholderName, HouseholdPopulation) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO Household (HouseholdAddress, HouseholderName) VALUES (?, ?)";
         int res = JdbcUtil.update(sql,
                 hou.getHouseholdaddress(),
-                hou.getHouseholdername(),
-                hou.getHouseholdpopulation()
+                hou.getHouseholdername()
         );
         return res;
     }
@@ -114,17 +112,16 @@ public class HouseholdDao {
 
     public int delete(Household household) {
         String sql = "update household set isdelete=1 where HouseholdID = ? ";
-        System.out.println(household.getHouseholdid());
         int res = JdbcUtil.update(sql, household.getHouseholdid());
         return res;
     }
     //修改
 
     public int edit(Household hou) {
-        System.out.println("edit:"+hou.getHouseholdaddress());
-        System.out.println("edit:"+hou.getHouseholdid());
-        String sql = "update household set HouseholdAddress =?, HouseholderName =?, HouseholdPopulation =? WHERE HouseholdID = ?";
-        int res = JdbcUtil.update(sql,hou.getHouseholdaddress(),hou.getHouseholdername(),hou.getHouseholdpopulation(),hou.getHouseholdid() );
+//        System.out.println("edit:"+hou.getHouseholdaddress());
+//        System.out.println("edit:"+hou.getHouseholdid());
+        String sql = "update household set HouseholdAddress =?, HouseholderName =? WHERE HouseholdID = ?";
+        int res = JdbcUtil.update(sql,hou.getHouseholdaddress(),hou.getHouseholdername(),hou.getHouseholdid() );
         return res;
     }
 }

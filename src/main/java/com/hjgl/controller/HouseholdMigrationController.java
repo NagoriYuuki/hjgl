@@ -31,8 +31,8 @@ public class HouseholdMigrationController {
 
     @RequestMapping("agree")
     public int agree(@RequestBody HouseholdMigration householdMigration, HttpSession session) throws SQLException, IllegalAccessException, InstantiationException {
-        System.out.println("check:housemigration:-------->");
-        System.out.println(householdMigration);
+//        System.out.println("check:housemigration:-------->");
+//        System.out.println(householdMigration);
         Object obj=session.getAttribute("loginadmin");
         if(obj instanceof Admin){
             Admin admin=(Admin)obj;
@@ -60,7 +60,7 @@ public class HouseholdMigrationController {
     public RestResult getlist(Person person , Admin admin, Page page) throws SQLException, IllegalAccessException, InstantiationException {
         List<HouseholdMigration> list=hmD.getRecord(person,admin,page);
         for(HouseholdMigration i:list){
-            System.out.println(i.getHouseholdmigrationid());
+//            System.out.println(i.getHouseholdmigrationid());
             int personid=i.getHouseholdmigrationuserid();
             int adminid=i.getHouseholdmigrationadminid();
             i.setPerson(personDao.getPersonByPersonid(personid));
